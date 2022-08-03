@@ -1,0 +1,21 @@
+@import '../style/style.scss';
+
+.Header {
+  height: 85px;
+  padding: 0 10vw;
+
+  display: flex;
+  justify-content: center;
+
+  background-color: $primary;
+
+  .navbar {
+    height: 100%;
+    width: 100%;
+    .Logo {
+      svg {
+        height: 55px;
+      }
+    }
+  }
+}

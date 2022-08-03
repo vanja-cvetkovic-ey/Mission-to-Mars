@@ -1,0 +1,16 @@
+@import '../style/style.scss';
+
+.home {
+  width: 100%;
+
+  .callToAction {
+    margin-top: 60px;
+
+    display: flex;
+    flex-direction: column;
+
+    @include for-phone-only {
+      margin-top: 10px;
+    }
+  }
+}
