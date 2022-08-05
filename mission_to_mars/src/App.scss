@@ -9,7 +9,7 @@
   color: $primary;
 }
 
-// reset defaults
+// links
 a {
   border: none;
   text-decoration: none;
@@ -26,6 +26,9 @@ a {
   svg {
     margin-right: 5px;
     font-size: 16px;
+  }
+  &:hover {
+    text-decoration: underline;
   }
 }
 
@@ -69,7 +72,7 @@ a {
   padding: 120px 10vw;
 
   @include for-phone-only {
-    padding: 60px 20px;
+    padding: 40px 10px;
   }
   @include for-tablet-portrait-up {
     padding: 60px 20px;
@@ -98,4 +101,13 @@ a {
 
 .card-description {
   font-size: 16px;
+}
+
+//error
+
+.error.msg {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

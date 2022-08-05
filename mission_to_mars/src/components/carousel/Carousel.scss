@@ -7,6 +7,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @include for-phone-only {
+    height: 50vh;
+    margin: 0;
+  }
+
+  .flex-row {
+    @include for-phone-only {
+      height: 100%;
+    }
+  }
 }
 
 .arrow {
@@ -47,6 +58,7 @@
   }
 
   @include for-phone-only {
+    height: 100%;
     margin: 0;
   }
 
@@ -58,16 +70,16 @@
     background-color: white;
 
     @include for-phone-only {
-      width: 100%;
+      max-width: 100%;
     }
     @include for-tablet-portrait-up {
-      width: 49%;
+      max-width: 49%;
     }
     @include for-tablet-landscape-up {
-      width: 32%;
+      max-width: 32%;
     }
     @include for-desktop-up {
-      width: 24%;
+      max-width: 24%;
     }
 
     .card-img {
@@ -131,5 +143,8 @@
       cursor: default;
       background-color: $gray-dark;
     }
+  }
+  @include for-phone-only {
+    display: none;
   }
 }

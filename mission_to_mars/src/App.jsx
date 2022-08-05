@@ -1,12 +1,12 @@
 import './App.scss';
 import { Routes, Route } from 'react-router-dom';
-import Header from './layout/Header';
-import Home from './pages/Home';
+import Header from './layout/Header/Header';
+import Home from './pages/Home/Home';
 import Applicationprocess from './pages/Applicationprocess';
 import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyNotice from './pages/PrivacyNotice';
-import Footer from './layout/Footer';
-import Loader from './assets/Loader';
+import ErrorPage from './pages/ErrorPage';
+import Footer from './layout/Footer/Footer';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
           <Route path="/privacynotices" element={<PrivacyNotice />} />
           <Route path="/termaandconditions" element={<TermsAndConditions />} />
           <Route path="/applicationprocess" element={<Applicationprocess />} />
+          <Route path="/*" element={<ErrorPage />} />
         </Routes>
       </div>
       <Footer />
