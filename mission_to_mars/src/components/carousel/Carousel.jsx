@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 import CardCarousel from './CardCarousel';
 
@@ -8,7 +9,8 @@ import Loader from '../../assets/Loader';
 import useWindowSize from '../../hooks/useWindowSize';
 
 const IMAGES_APIKEY = process.env.REACT_APP_IMAGES_APIKEY;
-const IMGS_URL = `https://api.nasa.gov/planetary/apod?count=16&api_key=${IMAGES_APIKEY}`;
+const IMAGES_COUNT = 16;
+const IMGS_URL = `https://api.nasa.gov/planetary/apod?count=${IMAGES_COUNT}&api_key=${IMAGES_APIKEY}`;
 
 const Carousel = () => {
   const [loading, setLoading] = useState(true);
@@ -26,19 +28,12 @@ const Carousel = () => {
   useEffect(() => {
     const fetchImgs = async () => {
       try {
-        const response = await axios.get(IMGS_URL);
-        setImgs(response.data);
+        const { data } = await axios.get(IMGS_URL);
+        setImgs(data);
         setLoading(false);
       } catch (error) {
         setLoading(false);
         setErr(true);
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.headers);
-          console.log(error.response.status);
-        } else {
-          console.log(`error -> ${error.message}`);
-        }
       }
     };
 
@@ -117,8 +112,8 @@ const Carousel = () => {
 
   return (
     <div className="Carousel">
-      {loading && !err && !activeImgs && <Loader />}
-      {!loading && err && (
+      {loading && <Loader />}
+      {err && (
         <h4 className="error msg">
           Our images are still somewhere in the Univers <br /> enjoy the rest of
           content
@@ -138,12 +133,12 @@ const Carousel = () => {
             )}
 
             <div className="panel">
-              {activeImgs.map((img, index) => (
+              {activeImgs.map(({ url, title, explanation }) => (
                 <CardCarousel
-                  key={index}
-                  url={img.url}
-                  name={img.title}
-                  explanation={img.explanation}
+                  key={uuidv4()}
+                  url={url}
+                  name={title}
+                  explanation={explanation}
                 />
               ))}
             </div>

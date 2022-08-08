@@ -11,11 +11,11 @@ import './Carousel.scss';
  * @returns {JSX} single card with image and text content
  */
 
-const CardCarousel = ({ url, name, explanation }) => {
+const CardCarousel = ({ url, name, explanation, id }) => {
   return (
     <div className="CardCarousel">
       <div className="card-img">
-        <img src={url} alt="" />
+        <img src={url} alt={name} />
       </div>
       <div className="cart-text">
         <p className="title">{name}</p>

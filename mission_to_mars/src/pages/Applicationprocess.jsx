@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { AiOutlineHome } from 'react-icons/ai';
 
+import BackToHomeBtn from '../components/shared/BackToHomeBtn';
+
 const Applicationprocess = () => {
+  const HEADING = 'Application will be opening soon';
+
   return (
     <div className="display-center">
-      <h2>Application will be opening soon</h2>
-      <Link to="/" className="link_icon">
-        {<AiOutlineHome />} back to Home page
-      </Link>
+      <h2>{HEADING}</h2>
+      <BackToHomeBtn />
     </div>
   );
 };

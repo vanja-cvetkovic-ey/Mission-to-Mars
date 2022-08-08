@@ -72,7 +72,7 @@ a {
   padding: 120px 10vw;
 
   @include for-phone-only {
-    padding: 40px 20px;
+    padding: 40px 10px;
   }
   @include for-tablet-portrait-up {
     padding: 60px 20px;
