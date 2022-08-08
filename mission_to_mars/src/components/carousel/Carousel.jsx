@@ -8,7 +8,7 @@ import Loader from '../../assets/Loader';
 import useWindowSize from '../../hooks/useWindowSize';
 
 const IMAGES_APIKEY = process.env.REACT_APP_IMAGES_APIKEY;
-const IMAGES_COUNT = 16;
+const IMAGES_COUNT = 32;
 const IMGS_URL = `https://api.nasa.gov/planetary/apod?count=${IMAGES_COUNT}&api_key=${IMAGES_APIKEY}`;
 
 const Carousel = () => {
@@ -118,7 +118,7 @@ const Carousel = () => {
           content
         </h4>
       )}
-      {!loading && !err && activeImgs && (
+      {activeImgs && (
         <>
           <div className="flex-row">
             {first !== 0 ? (
@@ -152,7 +152,7 @@ const Carousel = () => {
             )}
           </div>
           <div className="dots">
-            {dots.length < 6 && (
+            {amount_activeImgs >= 3 && (
               <>
                 {dots.map((dot) =>
                   dot === counter ? (

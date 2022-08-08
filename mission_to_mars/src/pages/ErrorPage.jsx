@@ -1,8 +1,5 @@
-import { Link } from 'react-router-dom';
-import { AiOutlineHome } from 'react-icons/ai';
-
-import BackToHomeBtn from '../components/shared/BackToHomeBtn';
 import { ERROR } from '../shared/constants';
+import BackToHomeBtn from '../components/shared/BackToHomeBtn';
 
 const Error = () => {
   return (
