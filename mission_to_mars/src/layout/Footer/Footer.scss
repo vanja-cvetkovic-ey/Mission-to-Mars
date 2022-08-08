@@ -1,0 +1,15 @@
+@import '../../style/style.scss';
+
+.Footer {
+  background-color: $gray-dark;
+  display: flex;
+  justify-content: flex-start;
+
+  padding: 30px 10vw;
+
+  a {
+    color: $gray-light;
+    font-size: 0.8em;
+    margin-right: 10px;
+  }
+}
