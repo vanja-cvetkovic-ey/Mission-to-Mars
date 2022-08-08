@@ -7,7 +7,8 @@ import CardCarousel from './CardCarousel';
 import Loader from '../../assets/Loader';
 import useWindowSize from '../../hooks/useWindowSize';
 
-const IMGS_URL = process.env.REACT_APP_IMAGES_URL;
+const IMAGES_APIKEY = process.env.REACT_APP_IMAGES_APIKEY;
+const IMGS_URL = `https://api.nasa.gov/planetary/apod?count=16&api_key=${IMAGES_APIKEY}`;
 
 const Carousel = () => {
   const [loading, setLoading] = useState(true);
