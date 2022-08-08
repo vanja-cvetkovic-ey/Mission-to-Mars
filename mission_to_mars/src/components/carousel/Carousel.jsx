@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 import CardCarousel from './CardCarousel';
 
@@ -135,14 +134,14 @@ const Carousel = () => {
             <div className="panel">
               {activeImgs.map(({ url, title, explanation }) => (
                 <CardCarousel
-                  key={uuidv4()}
+                  key={title}
                   url={url}
                   name={title}
                   explanation={explanation}
                 />
               ))}
             </div>
-            {last !== 16 ? (
+            {last !== IMAGES_COUNT ? (
               <div className="arrow" onClick={handleNext}>
                 <AiOutlineArrowRight />
               </div>
@@ -155,15 +154,15 @@ const Carousel = () => {
           <div className="dots">
             {dots.length < 6 && (
               <>
-                {dots.map((dot, index) =>
+                {dots.map((dot) =>
                   dot === counter ? (
-                    <div key={dot} className="dot active"></div>
+                    <div key={dot} className="dot active" />
                   ) : (
                     <div
                       key={dot}
                       className="dot"
                       onClick={() => dotsHandler(dot)}
-                    ></div>
+                    />
                   )
                 )}
               </>

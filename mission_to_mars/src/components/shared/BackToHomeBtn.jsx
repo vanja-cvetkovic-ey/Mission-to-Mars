@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AiOutlineHome } from 'react-icons/ai';
 
+import { BACKTOHOME } from '../../shared/constants';
+
 const BackToHomeBtn = () => {
-  const BTN_TEXT = 'back to Home page';
   return (
     <Link to="/" className="link_icon">
-      {<AiOutlineHome />} {BTN_TEXT}
+      {<AiOutlineHome />} {BACKTOHOME}
     </Link>
   );
 };
