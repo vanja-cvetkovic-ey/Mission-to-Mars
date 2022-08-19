@@ -1,0 +1,35 @@
+.btn,
+.btn-cta {
+  margin: 10px;
+  width: fit-content;
+  padding: 15px 35px;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1em;
+
+  cursor: pointer;
+}
+
+.btn {
+  border-width: 1px;
+  outline: none;
+  background-color: rgba($color: white, $alpha: 0.8);
+
+  &:hover {
+    background-color: white;
+  }
+}
+
+.btn-cta {
+  color: $gray-light;
+  background-color: $primary;
+
+  border: none;
+  outline: none;
+
+  &:disabled {
+    background-color: rgba($color: $primary, $alpha: 0.3);
+    cursor: auto;
+  }
+}

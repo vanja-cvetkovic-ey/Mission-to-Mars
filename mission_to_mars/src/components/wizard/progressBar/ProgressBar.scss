@@ -1,0 +1,43 @@
+@import '../../../style/style.scss';
+
+.ProgressBar {
+  width: 860px;
+  height: 80px;
+  margin: 20px 0;
+  justify-content: center;
+
+  @include for-tablet-portrait-up {
+    max-width: 100%;
+  }
+
+  @include for-phone-only {
+    max-width: 100%;
+    margin: 20px 0 0;
+  }
+
+  .container {
+    max-width: 100%;
+
+    .page {
+      width: 56px !important;
+      height: 56px;
+      background-color: $gray-disabled;
+      color: white;
+
+      &.true {
+        background-color: $primary;
+      }
+    }
+
+    .line {
+      // display: flex;
+      flex-grow: 1;
+      height: 2px;
+      background-color: $gray-disabled;
+
+      &.true {
+        background-color: $primary;
+      }
+    }
+  }
+}

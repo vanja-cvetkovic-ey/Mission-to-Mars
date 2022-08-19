@@ -1,0 +1,71 @@
+@import '../../../../style/style.scss';
+
+.additional {
+  width: 100%;
+  align-items: flex-end;
+  margin-top: 0 !important;
+  margin-bottom: 15px !important;
+
+  @include for-tablet-portrait-up {
+    justify-content: flex-end;
+  }
+
+  .row-item {
+    width: 240px;
+    // @include for-tablet-portrait-up {
+    //   margin: 5px 0;
+    // }
+
+    &.btns-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 120px;
+      margin-bottom: 10px;
+
+      @include for-tablet-portrait-up {
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      div {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        border: 1px solid $gray-dark;
+        color: $gray-dark;
+
+        margin: 0 5px;
+
+        cursor: pointer;
+
+        &:hover {
+          font-weight: bold;
+          font-size: 17px;
+        }
+
+        &.btn-false {
+          background-color: $gray-light;
+          border: 1px solid $gray-light;
+          font-weight: normal;
+          font-size: 16px;
+          cursor: not-allowed;
+        }
+        &.btn-true {
+          background-color: white;
+        }
+
+        &.false {
+          border: none;
+        }
+      }
+    }
+    .additional_info {
+      padding-top: 0 !important;
+    }
+  }
+}
+
+.additional:last-of-type {
+  margin-bottom: 35px !important;
+}

@@ -12,3 +12,23 @@ body,
   height: 100%;
   width: 100%;
 }
+
+a,
+input,
+select {
+  outline: none;
+}
+
+a {
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid $gray-middle;
+  outline: none;
+  padding: 5px;
+}

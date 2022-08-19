@@ -1,5 +1,6 @@
 @import './style/style.scss';
 
+// links
 .App {
   min-height: 100vh;
   text-align: center;
@@ -7,13 +8,6 @@
   display: flex;
   flex-direction: column;
   color: $primary;
-}
-
-// links
-a {
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 .link_icon {
@@ -32,12 +26,6 @@ a {
   }
 }
 
-//typo
-.p-text {
-  color: $primary;
-  margin: 10px 0;
-}
-
 //display
 .flex-row {
   display: flex;
@@ -53,16 +41,12 @@ a {
   align-items: center;
 }
 
-// common
-.btn-cta {
-  margin: 10px auto;
-  width: fit-content;
-  padding: 15px 25px;
-  text-align: center;
-  line-height: 1em;
-  color: $gray-light;
-  background-color: $primary;
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
+
+// common
 
 .main {
   display: flex;
@@ -84,10 +68,11 @@ a {
     padding: 80px 10vw;
   }
   .content {
+    width: 100%;
     text-align: left;
     h1,
-    p {
-      margin-bottom: 40px;
+    h2 {
+      margin-bottom: 60px;
     }
   }
 }
@@ -105,9 +90,9 @@ a {
 
 //error
 
-.error.msg {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+// .error.msg {
+//   height: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
