@@ -77,6 +77,10 @@
 
           padding-left: 20px;
 
+          &.error-true {
+            border: 1px solid red;
+          }
+
           .row-item {
             width: auto;
             display: flex;

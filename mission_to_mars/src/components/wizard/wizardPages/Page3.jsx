@@ -16,6 +16,8 @@ const Page3 = () => {
     handleValueValidation,
   } = useContext(WizardContext);
   const [metalWorks_arr, setMetalWorks_arrs] = useState([]);
+  const [disableSubmitBtn, setDisableSubmitBtn] = useState(true);
+  const [additionalFilled, setAdditionalFilled] = useState(false);
   const textareaRef = useRef();
   let navigate = useNavigate();
 
@@ -38,11 +40,20 @@ const Page3 = () => {
         applications-to-mars.json`,
         submitedValues
       );
-      console.log(response);
       navigate('/', { replace: true });
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleDeleteDisabledField = (disabledFied, name, value, PAGE) => {
+    if (disabledFied === 'metalWork_selected') {
+      setMetalWorks_arrs([]);
+    } else {
+      handleInput(disabledFied, '', PAGE);
+    }
+
+    handleInput(name, value, PAGE);
   };
 
   const handleDisabledOnChange = (field, disabled, checked, value) => {
@@ -75,24 +86,31 @@ const Page3 = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metalWorks_arr]);
 
-  const submitBtn =
-    (!page3.agricultureSkills ||
-      (page3.agricultureSkills && page3.agricultureSkills_describe)) &&
-    (!page3.metalWork ||
-      (page3.metalWork && page3.metalWork_selected.length > 0)) &&
-    (!page3.convicted ||
-      (page3.convicted &&
-        page3.convicted_reason_date.at(-1).reason &&
-        page3.convicted_reason_date.at(-1).date)) ? (
-      <button className="btn-cta" onClick={() => handleSubmit()}>
-        submit
-      </button>
-    ) : (
-      <button className="btn-cta" disabled>
-        submit
-      </button>
-    );
+  useEffect(() => {
+    const hasNoError = (element) => element === '';
+    if (
+      (!page3.agricultureSkills ||
+        (page3.agricultureSkills && page3.agricultureSkills_describe)) &&
+      (!page3.metalWork || (page3.metalWork && !!metalWorks_arr.length)) &&
+      (!page3.convicted ||
+        (page3.convicted && !!page3.convicted_reason_date.length)) &&
+      Object.values(errors_page3).every(hasNoError)
+    ) {
+      setDisableSubmitBtn(true);
+    } else {
+      setDisableSubmitBtn(false);
+    }
+  }, [page3]);
 
+  const submitBtn = disableSubmitBtn ? (
+    <button className="btn-cta" onClick={() => handleSubmit()}>
+      submit
+    </button>
+  ) : (
+    <button className="btn-cta" disabled>
+      submit
+    </button>
+  );
   return (
     <>
       {' '}
@@ -103,6 +121,7 @@ const Page3 = () => {
             {INFO.form} <span>*</span>
           </div>
         </div>
+
         <div className="content form">
           <div className="row">
             <div className="info">
@@ -116,7 +135,12 @@ const Page3 = () => {
                   value={false}
                   checked={!page3.agricultureSkills}
                   onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
+                    handleDeleteDisabledField(
+                      'agricultureSkills_describe',
+                      e.target.name,
+                      e.target.value,
+                      PAGE
+                    )
                   }
                 />
                 {WIZARD_PAGE_3.no}
@@ -136,31 +160,22 @@ const Page3 = () => {
             </div>
           </div>
 
-          <div className="row">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.agriculture_describe}
+          {page3.agricultureSkills && (
+            <div className="row">
+              <div className="info">
+                <span>*</span> {WIZARD_PAGE_3.agriculture_describe}
+              </div>
+              <textarea
+                rows={10}
+                ref={textareaRef}
+                name="agricultureSkills_describe"
+                disabled={disabled.agriculture}
+                onChange={(e) =>
+                  handleDisabledOnChange(e.target.name, disabled.agriculture)
+                }
+              />
             </div>
-            <textarea
-              rows={10}
-              ref={textareaRef}
-              className={`error-${!!errors_page3.agricultureSkills_describe}`}
-              name="agricultureSkills_describe"
-              disabled={disabled.agriculture}
-              onChange={(e) =>
-                handleDisabledOnChange(e.target.name, disabled.agriculture)
-              }
-              onBlur={(e) =>
-                handleValueValidation(
-                  e.target.name,
-                  e.target.value,
-                  ERRORS_PAGE
-                )
-              }
-            />
-            <span className="error-text">
-              {errors_page3.agricultureSkills_describe}
-            </span>
-          </div>
+          )}
 
           <div className="row">
             <div className="info">
@@ -174,7 +189,12 @@ const Page3 = () => {
                   value={false}
                   checked={!page3.metalWork}
                   onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
+                    handleDeleteDisabledField(
+                      'metalWork_selected',
+                      e.target.name,
+                      e.target.value,
+                      PAGE
+                    )
                   }
                 />
                 No
@@ -194,32 +214,39 @@ const Page3 = () => {
             </div>
           </div>
 
-          <div className="row ">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.metalwork_set}
-            </div>
+          {page3.metalWork && (
+            <div className="row">
+              <div className="info">
+                <span>*</span> {WIZARD_PAGE_3.metalwork_set}
+              </div>
 
-            <div className="checkboxes">
-              {WIZARD_PAGE_3.checkboxes_MetalWorks.map((metalwork) => (
-                <div key={metalwork.value} className="row-item">
-                  <input
-                    type="checkbox"
-                    value={metalwork.value}
-                    disabled={disabled.metalwork}
-                    onClick={(e) =>
-                      handleDisabledOnChange(
-                        'metalWork_selected',
-                        e.target.disabled,
-                        e.target.checked,
-                        e.target.value
-                      )
-                    }
-                  />
-                  {metalwork.label}
-                </div>
-              ))}
+              <div
+                className={`checkboxes error-${!!errors_page3.metalWork_selected}`}
+              >
+                {WIZARD_PAGE_3.checkboxes_MetalWorks.map((metalwork) => (
+                  <div key={metalwork.value} className="row-item">
+                    <input
+                      type="checkbox"
+                      value={metalwork.value}
+                      disabled={disabled.metalwork}
+                      onClick={(e) =>
+                        handleDisabledOnChange(
+                          'metalWork_selected',
+                          e.target.disabled,
+                          e.target.checked,
+                          e.target.value
+                        )
+                      }
+                    />
+                    {metalwork.label}
+                  </div>
+                ))}
+              </div>
+              <span className="error-text">
+                {errors_page3.metalWork_selected}
+              </span>
             </div>
-          </div>
+          )}
           {/* convicted */}
 
           <div className="row ">
@@ -234,7 +261,12 @@ const Page3 = () => {
                   value={false}
                   checked={!page3.convicted}
                   onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
+                    handleDeleteDisabledField(
+                      'convicted_reason_date',
+                      e.target.name,
+                      e.target.value,
+                      PAGE
+                    )
                   }
                 />
                 {WIZARD_PAGE_3.no}
@@ -253,9 +285,14 @@ const Page3 = () => {
               </div>
             </div>
           </div>
-          <div className="group">
-            <AdditionalList disabled={disabled.convicted} />
-          </div>
+          {page3.convicted && (
+            <div className="group">
+              <AdditionalList
+                disabled={disabled.convicted}
+                setDisableSubmitBtn={setDisableSubmitBtn}
+              />
+            </div>
+          )}
 
           <div className="row ">
             <div className="info">

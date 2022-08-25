@@ -8,8 +8,10 @@ const Page2 = () => {
     formState,
     handleInput,
     disabled,
+    disabledBtn,
     setOpenPages,
     handleValueValidation,
+    handleContinueBtn,
     handlePrevPage,
     handleNextPage,
   } = useContext(WizardContext);
@@ -30,24 +32,19 @@ const Page2 = () => {
     }
   };
 
-  const continueBtn =
-    page2.email &&
-    page2.adressLine1 &&
-    page2.city &&
-    page2.state &&
-    page2.zip &&
-    page2.years ? (
-      <button
-        className="btn-cta"
-        onClick={() => handleNextPage(errors_page2, 'page3')}
-      >
-        {CONTINUE}
-      </button>
-    ) : (
-      <button className="btn-cta" disabled>
-        {CONTINUE}
-      </button>
-    );
+  useEffect(() => {
+    handleContinueBtn(errors_page2, page2);
+  }, [errors_page2, page2]);
+
+  const continueBtn = disabledBtn ? (
+    <button className="btn-cta" disabled>
+      {CONTINUE}
+    </button>
+  ) : (
+    <button className="btn-cta" onClick={handleNextPage}>
+      {CONTINUE}
+    </button>
+  );
 
   return (
     <>
@@ -122,13 +119,6 @@ const Page2 = () => {
                 value={page2.adressLine2}
                 onChange={(e) =>
                   handleInput(e.target.name, e.target.value, PAGE)
-                }
-                onBlur={(e) =>
-                  handleValueValidation(
-                    e.target.name,
-                    e.target.value,
-                    ERRORS_PAGE
-                  )
                 }
               />
               <span className="error-text">{errors_page2.adressLine2}</span>

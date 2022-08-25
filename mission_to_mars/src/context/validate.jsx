@@ -22,13 +22,13 @@ const validator = (field, value) => {
       message = 'upsi';
     }
   }
-  if (field === 'adressLine1' || field === 'adressLine2') {
-    if (!new RegExp(/(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]/g).test(value)) {
-      message = 'upsi adress line 1 / 2';
+  if (field === 'adressLine1') {
+    if (!new RegExp(/[a-zA-Z0-9\s]/g).test(value)) {
+      message = 'upsi adress line 1';
     }
   }
   if (field === 'zip') {
-    if (!new RegExp(/^\d{5}(-\d{4})?$/).test(value)) {
+    if (!new RegExp(/[0-9]{4,6}/).test(value)) {
       message = 'upsi ';
     }
   }
@@ -38,6 +38,18 @@ const validator = (field, value) => {
     }
   }
   if (field === 'agricultureSkills_describe') {
+    if (!value) {
+      message = 'upsi';
+    }
+  }
+
+  if (field === 'metalWork_selected') {
+    if (!value) {
+      message = 'upsi';
+    }
+  }
+
+  if (field.includes('convicted_reason')) {
     if (!value) {
       message = 'upsi';
     }

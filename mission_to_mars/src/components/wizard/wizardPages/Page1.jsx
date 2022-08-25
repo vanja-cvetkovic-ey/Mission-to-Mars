@@ -1,11 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { INFO, WIZARD_PAGE_1, CONTINUE } from '../../../shared/constants';
 import WizardContext from '../../../context/WizardContext';
 
 const Page1 = () => {
-  const { handleInput, handleValueValidation, formState, handleNextPage } =
-    useContext(WizardContext);
+  const {
+    handleInput,
+    handleValueValidation,
+    formState,
+    disabledBtn,
+    handleContinueBtn,
+    handleNextPage,
+  } = useContext(WizardContext);
 
   const { page1, errors_page1 } = formState;
 
@@ -21,19 +27,19 @@ const Page1 = () => {
     new Date().getDay() < 10 ? `0${new Date().getDay()}` : new Date().getDay();
   const MAX_DATE = `${year}-${month}-${day}`;
 
-  const continueBtn =
-    page1.title && page1.firstName && page1.lastName && page1.birthDate ? (
-      <button
-        className="btn-cta"
-        onClick={() => handleNextPage(errors_page1, 'page2')}
-      >
-        {CONTINUE}
-      </button>
-    ) : (
-      <button className="btn-cta" disabled>
-        {CONTINUE}
-      </button>
-    );
+  useEffect(() => {
+    handleContinueBtn(errors_page1, page1);
+  }, [errors_page1, page1]);
+
+  const continueBtn = disabledBtn ? (
+    <button className="btn-cta" disabled>
+      {CONTINUE}
+    </button>
+  ) : (
+    <button className="btn-cta" onClick={handleNextPage}>
+      {CONTINUE}
+    </button>
+  );
 
   return (
     <>

@@ -76,7 +76,6 @@ const errors_page2 = {
 const errors_page3 = {
   agricultureSkills_describe: '',
   metalWork_selected: '',
-  convicted_reason_date: '',
 };
 
 const ACTIONS = {
@@ -94,6 +93,7 @@ export const WizardProvider = ({ children }) => {
     errors_page3,
   });
 
+  const [disabledBtn, setDisabledBtn] = useState(true);
   const [startWizard, setStartWizard] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [openPages, setOpenPages] = useState(['page1']);
@@ -155,14 +155,21 @@ export const WizardProvider = ({ children }) => {
     }
   };
 
-  const handleNextPage = (error_msgs, nextOpenPage) => {
+  const handleContinueBtn = (errors, values) => {
     const hasError = (element) => element !== '';
-
-    if (Object.values(error_msgs).some(hasError)) {
-      return {};
+    const hasNoValue = (element) => element === '';
+    if (
+      Object.values(errors).some(hasError) ||
+      Object.values(values).some(hasNoValue)
+    ) {
+      setDisabledBtn(true);
     } else {
-      setCurrentPage((prev) => prev + 1);
+      setDisabledBtn(false);
     }
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
   };
 
   const handlePrevPage = () => {
@@ -184,6 +191,8 @@ export const WizardProvider = ({ children }) => {
         handleInput,
         handleValueValidation,
         disabled,
+        handleContinueBtn,
+        disabledBtn,
         handleNextPage,
         handlePrevPage,
         displayStep,
