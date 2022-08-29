@@ -1,0 +1,56 @@
+@import '../../../../style/style.scss';
+
+.states {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid $gray-middle;
+  position: relative;
+  margin-top: 5px;
+
+  input {
+    border: 0;
+    margin: 0;
+
+    &:focus {
+      border: none;
+      outline: 0;
+    }
+  }
+
+  .icon {
+    svg {
+      font-size: 14px;
+      color: $gray-dark;
+      padding-right: 5px;
+
+      &:hover {
+        color: red;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.list {
+  // display: none;
+  width: 240px;
+  max-height: 40vh;
+  overflow-y: auto;
+  border: 1px solid $gray-middle;
+  background-color: white;
+  position: absolute;
+  top: 60px;
+  z-index: 1;
+
+  .item {
+    color: $gray-dark;
+    font-size: 14px;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}

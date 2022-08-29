@@ -7,24 +7,16 @@ import AdditionalList from './additionalFields.jsx/AdditionalList';
 import axios from 'axios';
 
 const Page3 = () => {
-  const {
-    formState,
-    handleInput,
-    handlePrevPage,
-    disabled,
-    setOpenPages,
-    handleValueValidation,
-  } = useContext(WizardContext);
+  const { formState, handleInput, handlePrevPage, disabled, setOpenPages } =
+    useContext(WizardContext);
   const [metalWorks_arr, setMetalWorks_arrs] = useState([]);
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(true);
-  const [additionalFilled, setAdditionalFilled] = useState(false);
   const textareaRef = useRef();
   let navigate = useNavigate();
 
   const { page3, errors_page3 } = formState;
 
   const PAGE = 'page3';
-  const ERRORS_PAGE = 'errors_page3';
   const DB = process.env.REACT_APP_DB;
 
   useEffect(() => {
@@ -35,7 +27,7 @@ const Page3 = () => {
   const handleSubmit = async () => {
     const submitedValues = { ...formState.page1, ...formState.page2, ...page3 };
     try {
-      const { response } = await axios.post(
+      await axios.post(
         `${DB}/
         applications-to-mars.json`,
         submitedValues
@@ -100,6 +92,7 @@ const Page3 = () => {
     } else {
       setDisableSubmitBtn(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page3]);
 
   const submitBtn = disableSubmitBtn ? (
@@ -227,6 +220,7 @@ const Page3 = () => {
                   <div key={metalwork.value} className="row-item">
                     <input
                       type="checkbox"
+                      id={metalwork.value}
                       value={metalwork.value}
                       disabled={disabled.metalwork}
                       onClick={(e) =>
@@ -238,7 +232,7 @@ const Page3 = () => {
                         )
                       }
                     />
-                    {metalwork.label}
+                    <label htmlFor="metalwork.value">{metalwork.label}</label>
                   </div>
                 ))}
               </div>

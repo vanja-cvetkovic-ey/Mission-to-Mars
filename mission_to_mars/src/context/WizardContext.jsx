@@ -67,7 +67,6 @@ const errors_page1 = {
 const errors_page2 = {
   email: '',
   adressLine1: '',
-  adressLine2: '',
   city: '',
   state: '',
   zip: '',
@@ -156,11 +155,12 @@ export const WizardProvider = ({ children }) => {
   };
 
   const handleContinueBtn = (errors, values) => {
+    const { adressLine2, ...dataForm } = values;
     const hasError = (element) => element !== '';
     const hasNoValue = (element) => element === '';
     if (
       Object.values(errors).some(hasError) ||
-      Object.values(values).some(hasNoValue)
+      Object.values(dataForm).some(hasNoValue)
     ) {
       setDisabledBtn(true);
     } else {

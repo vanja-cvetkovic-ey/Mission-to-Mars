@@ -1,7 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { CONTINUE, INFO, WIZARD_PAGE_2 } from '../../../shared/constants';
+import States from './states/States';
 import WizardContext from '../../../context/WizardContext';
+import axios from 'axios';
 
 const Page2 = () => {
   const {
@@ -20,6 +22,9 @@ const Page2 = () => {
   const PAGE = 'page2';
   const ERRORS_PAGE = 'errors_page2';
 
+  const [citesOpt, setCitesOpt] = useState([]);
+  const [zipOpt, setZipOpt] = useState([]);
+
   useEffect(() => {
     setOpenPages((prev) => [...prev, PAGE]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,7 +38,62 @@ const Page2 = () => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
+
+    const getCitiesOptions = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://det.api.rs.ey.com/api/states/${page2.state[0]}/cities`
+        );
+        let cities = [];
+        console.log(data);
+        cities = data.filter((item) => {
+          const isDuplicate = cities.find((city) => item.name === city.name);
+          if (!isDuplicate) {
+            console.log('HELLO');
+            cities.push(item);
+            return true;
+          }
+          return false;
+        });
+        setCitesOpt(cities);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (page2.state !== '') {
+      getCitiesOptions();
+      return () => {
+        controller.abort();
+      };
+    }
+  }, [page2.state]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const getZipOptions = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://det.api.rs.ey.com/api/states/${page2.state[0]}/cities/${page2.city}/postalcodes`
+        );
+        setZipOpt(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (page2.state !== '') {
+      getZipOptions();
+      return () => {
+        controller.abort();
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page2.city]);
+
+  useEffect(() => {
     handleContinueBtn(errors_page2, page2);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors_page2, page2]);
 
   const continueBtn = disabledBtn ? (
@@ -121,55 +181,29 @@ const Page2 = () => {
                   handleInput(e.target.name, e.target.value, PAGE)
                 }
               />
-              <span className="error-text">{errors_page2.adressLine2}</span>
+              <span className="error-text"></span>
             </div>
           </div>
           <div className="row flex-row">
-            {/* State */}
-            <div className="row-item row-item-3">
-              <div className="info">
-                <span>*</span> {WIZARD_PAGE_2.state_label}
-              </div>
-              <input
-                className={`error-${!!errors_page2.state}`}
-                type="text"
-                placeholder={WIZARD_PAGE_2.state_label}
-                name="state"
-                value={page2.state}
-                onChange={(e) =>
-                  handleInput(e.target.name, e.target.value, PAGE)
-                }
-                onBlur={(e) =>
-                  handleValueValidation(
-                    e.target.name,
-                    e.target.value,
-                    ERRORS_PAGE
-                  )
-                }
-              />
-              <span className="error-text">{errors_page2.state}</span>
-            </div>
+            <States errors_page2 />
             {/* city */}
             <div className="row-item row-item-3">
               <div className="info">
                 <span>*</span> {WIZARD_PAGE_2.city_label}
               </div>
-              <input
-                className={`error-${!!errors_page2.city}`}
-                type="text"
-                placeholder={WIZARD_PAGE_2.city_label}
+              <select
                 name="city"
                 value={page2.city}
                 disabled={disabled.city}
                 onChange={(e) => handleDisabledOnChange(e)}
-                onBlur={(e) =>
-                  handleValueValidation(
-                    e.target.name,
-                    e.target.value,
-                    ERRORS_PAGE
-                  )
-                }
-              />
+              >
+                {citesOpt.map((city) => (
+                  <option key={city.name} value={city.name} disabled={false}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+
               <span className="error-text">{errors_page2.city}</span>
             </div>
             {/* postl code */}
@@ -177,22 +211,19 @@ const Page2 = () => {
               <div className="info">
                 <span>*</span> {WIZARD_PAGE_2.zip_label}
               </div>
-              <input
-                className={`error-${!!errors_page2.zip}`}
-                type="text"
-                placeholder={WIZARD_PAGE_2.zip_label}
+              <select
                 name="zip"
                 value={page2.zip}
                 disabled={disabled.zip}
                 onChange={(e) => handleDisabledOnChange(e)}
-                onBlur={(e) =>
-                  handleValueValidation(
-                    e.target.name,
-                    e.target.value,
-                    ERRORS_PAGE
-                  )
-                }
-              />
+              >
+                {zipOpt.map((zip) => (
+                  <option key={zip.code} value={zip.code} disabled={false}>
+                    {zip.code}
+                  </option>
+                ))}
+              </select>
+
               <span className="error-text">{errors_page2.zip}</span>
             </div>
           </div>
