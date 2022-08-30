@@ -6,7 +6,7 @@ import WizardContext from '../../../../context/WizardContext';
 import { FaTimes } from 'react-icons/fa';
 import './States.scss';
 
-const States = ({ errors_page2, page2, PAGE, ERRORS_PAGE }) => {
+const States = ({ errors_page2 }) => {
   const { handleInput } = useContext(WizardContext);
   const [allStates, setAllStates] = useState([]);
   const [inputValue, setInputValue] = useState('');
