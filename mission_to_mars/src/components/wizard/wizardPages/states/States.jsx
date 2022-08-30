@@ -49,7 +49,9 @@ const States = ({ errors_page2 }) => {
     );
 
     setSearchResults(filteredResults);
-    setToggle(true);
+    if (!!inputValue) {
+      setToggle(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
 
@@ -64,6 +66,8 @@ const States = ({ errors_page2 }) => {
       return;
     }
   };
+
+  console.log(toggle);
 
   return (
     <div className="row-item row-item-3 states-row-item">
@@ -82,9 +86,7 @@ const States = ({ errors_page2 }) => {
           onChange={(e) => handleInputValueChange(e)}
         />
         <div className="icon">
-          {(inputValue || toggle) && (
-            <FaTimes onClick={handleInputValueDelete} />
-          )}
+          {toggle && !clicked && <FaTimes onClick={handleInputValueDelete} />}
         </div>
       </div>
 

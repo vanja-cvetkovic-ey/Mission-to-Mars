@@ -44,6 +44,7 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
     if (Object.values(formState.errors_page3).includes('convicted_reason')) {
       console.log('jes');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disabled, listOfOffenses, formState.errors_page3]);
 
   return (

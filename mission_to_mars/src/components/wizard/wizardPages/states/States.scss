@@ -51,6 +51,13 @@
 
     &:hover {
       color: $primary;
+      background-color: $gray-light;
     }
+  }
+  @include for-tablet-portrait-up {
+    width: 100%;
+  }
+  @include for-phone-only {
+    width: 100%;
   }
 }

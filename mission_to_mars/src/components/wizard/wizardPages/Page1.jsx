@@ -29,6 +29,7 @@ const Page1 = () => {
 
   useEffect(() => {
     handleContinueBtn(errors_page1, page1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors_page1, page1]);
 
   const continueBtn = disabledBtn ? (
