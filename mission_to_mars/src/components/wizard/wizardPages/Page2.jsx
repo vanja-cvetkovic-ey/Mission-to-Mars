@@ -37,6 +37,7 @@ const Page2 = () => {
     }
   };
 
+  // api call cities values when the user choose state
   useEffect(() => {
     const controller = new AbortController();
 
@@ -46,17 +47,16 @@ const Page2 = () => {
           `http://det.api.rs.ey.com/api/states/${page2.state[0]}/cities`
         );
         let cities = [];
-        console.log(data);
         cities = data.filter((item) => {
           const isDuplicate = cities.find((city) => item.name === city.name);
           if (!isDuplicate) {
-            console.log('HELLO');
             cities.push(item);
             return true;
           }
           return false;
         });
-        setCitesOpt(cities);
+        cities.sort((a, b) => (a.name > b.name ? 1 : -1));
+        setCitesOpt([{ name: 'city' }, ...cities]);
       } catch (error) {
         console.log(error);
       }
@@ -67,8 +67,10 @@ const Page2 = () => {
         controller.abort();
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page2.state]);
 
+  // api call for  zip values when the user choose city
   useEffect(() => {
     const controller = new AbortController();
 
@@ -77,7 +79,8 @@ const Page2 = () => {
         const { data } = await axios.get(
           `http://det.api.rs.ey.com/api/states/${page2.state[0]}/cities/${page2.city}/postalcodes`
         );
-        setZipOpt(data);
+        data.sort((a, b) => (a.code > b.code ? 1 : -1));
+        setZipOpt([{ code: 'zip' }, ...data]);
       } catch (error) {
         console.log(error);
       }
@@ -185,7 +188,7 @@ const Page2 = () => {
             </div>
           </div>
           <div className="row flex-row">
-            <States errors_page2 />
+            <States errors_page2 page2={page2} />
             {/* city */}
             <div className="row-item row-item-3">
               <div className="info">
@@ -193,20 +196,36 @@ const Page2 = () => {
               </div>
               <select
                 name="city"
+                data-live-search="true"
+                className={`disabled`}
                 value={page2.city}
                 disabled={disabled.city}
                 onChange={(e) => handleDisabledOnChange(e)}
               >
-                {citesOpt.map((city) => (
-                  <option key={city.name} value={city.name} disabled={false}>
-                    {city.name}
-                  </option>
-                ))}
+                {disabled.city ? (
+                  <option>{WIZARD_PAGE_2.city_label}</option>
+                ) : (
+                  citesOpt.map((city) =>
+                    city.name === 'city' ? (
+                      <option disabled={true} value="" key="city" defaultValue>
+                        {`${page2.state[0]} cities:`}
+                      </option>
+                    ) : (
+                      <option
+                        key={city.name}
+                        value={city.name}
+                        disabled={false}
+                      >
+                        {city.name}
+                      </option>
+                    )
+                  )
+                )}
               </select>
 
               <span className="error-text">{errors_page2.city}</span>
             </div>
-            {/* postl code */}
+            {/* postal code */}
             <div className="row-item row-item-3">
               <div className="info">
                 <span>*</span> {WIZARD_PAGE_2.zip_label}
@@ -217,11 +236,21 @@ const Page2 = () => {
                 disabled={disabled.zip}
                 onChange={(e) => handleDisabledOnChange(e)}
               >
-                {zipOpt.map((zip) => (
-                  <option key={zip.code} value={zip.code} disabled={false}>
-                    {zip.code}
-                  </option>
-                ))}
+                {disabled.zip ? (
+                  <option>{WIZARD_PAGE_2.zip_label}</option>
+                ) : (
+                  zipOpt.map((zip) =>
+                    zip.code === 'zip' ? (
+                      <option key={'zip'} value="" disabled={true} defaultValue>
+                        {`Postal codes in ${page2.city}`}
+                      </option>
+                    ) : (
+                      <option key={zip.code} value={zip.code} disabled={false}>
+                        {zip.code}
+                      </option>
+                    )
+                  )
+                )}
               </select>
 
               <span className="error-text">{errors_page2.zip}</span>

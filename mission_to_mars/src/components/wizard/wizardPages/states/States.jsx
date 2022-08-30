@@ -6,13 +6,14 @@ import WizardContext from '../../../../context/WizardContext';
 import { FaTimes } from 'react-icons/fa';
 import './States.scss';
 
-const States = ({ errors_page2 }) => {
+const States = ({ errors_page2, page2 }) => {
   const { handleInput } = useContext(WizardContext);
   const [allStates, setAllStates] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(
+    page2.state !== '' ? page2.state : ''
+  );
   const [searchResults, setSearchResults] = useState([]);
   const [toggle, setToggle] = useState(false);
-  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -39,8 +40,8 @@ const States = ({ errors_page2 }) => {
     setInputValue('');
     handleInput('state', '', 'page2');
     handleInput('city', '', 'page2');
-    setToggle(false);
-    setClicked(false);
+    setToggle(true);
+    setSearchResults(allStates);
   };
 
   useEffect(() => {
@@ -49,25 +50,25 @@ const States = ({ errors_page2 }) => {
     );
 
     setSearchResults(filteredResults);
-    if (!!inputValue) {
+
+    if (filteredResults.length === 1 && !!inputValue) {
+      setToggle(false);
+    } else {
       setToggle(true);
+    }
+
+    if (inputValue === '') {
+      handleInput('state', '', 'page2');
+      handleInput('city', '', 'page2');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
 
   const handleState = (value) => {
-    console.log('a');
-    if (clicked === false) {
-      setInputValue(value[1]);
-      handleInput('state', value, 'page2');
-      setClicked(true);
-      setToggle(false);
-    } else {
-      return;
-    }
+    setInputValue(value[1]);
+    handleInput('state', value, 'page2');
+    setToggle(false);
   };
-
-  console.log(toggle);
 
   return (
     <div className="row-item row-item-3 states-row-item">
@@ -86,11 +87,15 @@ const States = ({ errors_page2 }) => {
           onChange={(e) => handleInputValueChange(e)}
         />
         <div className="icon">
-          {toggle && !clicked && <FaTimes onClick={handleInputValueDelete} />}
+          {(!!inputValue && !!searchResults.length && toggle) ||
+            (inputValue !== '' && inputValue !== page2.state[1] && (
+              <FaTimes onClick={handleInputValueDelete} />
+            ))}
         </div>
       </div>
 
-      {toggle && !clicked && (
+      {((!!inputValue && !!searchResults.length && toggle) ||
+        (!inputValue && !!searchResults && toggle)) && (
         <div className="list">
           {searchResults.map((state) => (
             <div
