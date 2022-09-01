@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
-import { CONTINUE, INFO, WIZARD_PAGE_2 } from '../../../shared/constants';
-import States from './states/States';
+import { CONTINUE, INFO, WIZARD_PAGE_2, URL } from '../../../shared/constants';
 import WizardContext from '../../../context/WizardContext';
-import axios from 'axios';
+import SelectField from './selectFields/SelectField';
+import States from './states/States';
 
 const Page2 = () => {
   const {
     formState,
     handleInput,
-    disabled,
     disabledBtn,
     setOpenPages,
     handleValueValidation,
@@ -21,9 +20,6 @@ const Page2 = () => {
   const { page2, errors_page2 } = formState;
   const PAGE = 'page2';
   const ERRORS_PAGE = 'errors_page2';
-
-  const [citesOpt, setCitesOpt] = useState([]);
-  const [zipOpt, setZipOpt] = useState([]);
 
   useEffect(() => {
     setOpenPages((prev) => [...prev, PAGE]);
@@ -37,67 +33,9 @@ const Page2 = () => {
     }
   };
 
-  // api call cities values when the user choose state
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const getCitiesOptions = async () => {
-      try {
-        const { data } = await axios.get(
-          `http://det.api.rs.ey.com/api/states/${page2.state[0]}/cities`
-        );
-        let cities = [];
-        cities = data.filter((item) => {
-          const isDuplicate = cities.find((city) => item.name === city.name);
-          if (!isDuplicate) {
-            cities.push(item);
-            return true;
-          }
-          return false;
-        });
-        cities.sort((a, b) => (a.name > b.name ? 1 : -1));
-        setCitesOpt([{ name: 'city' }, ...cities]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (page2.state !== '') {
-      getCitiesOptions();
-      return () => {
-        controller.abort();
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page2.state]);
-
-  // api call for  zip values when the user choose city
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const getZipOptions = async () => {
-      try {
-        const { data } = await axios.get(
-          `http://det.api.rs.ey.com/api/states/${page2.state[0]}/cities/${page2.city}/postalcodes`
-        );
-        data.sort((a, b) => (a.code > b.code ? 1 : -1));
-        setZipOpt([{ code: 'zip' }, ...data]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (page2.state !== '') {
-      getZipOptions();
-      return () => {
-        controller.abort();
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page2.city]);
-
   useEffect(() => {
     handleContinueBtn(errors_page2, page2);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errors_page2, page2]);
+  }, [handleContinueBtn, errors_page2, page2]);
 
   const continueBtn = disabledBtn ? (
     <button className="btn-cta" disabled>
@@ -194,34 +132,13 @@ const Page2 = () => {
               <div className="info">
                 <span>*</span> {WIZARD_PAGE_2.city_label}
               </div>
-              <select
-                name="city"
-                data-live-search="true"
-                className={`disabled`}
-                value={page2.city}
-                disabled={disabled.city}
-                onChange={(e) => handleDisabledOnChange(e)}
-              >
-                {disabled.city ? (
-                  <option>{WIZARD_PAGE_2.city_label}</option>
-                ) : (
-                  citesOpt.map((city) =>
-                    city.name === 'city' ? (
-                      <option disabled={true} value="" key="city" defaultValue>
-                        {`${page2.state[0]} cities:`}
-                      </option>
-                    ) : (
-                      <option
-                        key={city.name}
-                        value={city.name}
-                        disabled={false}
-                      >
-                        {city.name}
-                      </option>
-                    )
-                  )
-                )}
-              </select>
+              <SelectField
+                url={`${URL.states}/${page2.state[0]}/cities`}
+                prevInfo={page2.state}
+                fieldName="city"
+                handleDisabledOnChange={handleDisabledOnChange}
+                page2={page2}
+              />
 
               <span className="error-text">{errors_page2.city}</span>
             </div>
@@ -230,28 +147,14 @@ const Page2 = () => {
               <div className="info">
                 <span>*</span> {WIZARD_PAGE_2.zip_label}
               </div>
-              <select
-                name="zip"
-                value={page2.zip}
-                disabled={disabled.zip}
-                onChange={(e) => handleDisabledOnChange(e)}
-              >
-                {disabled.zip ? (
-                  <option>{WIZARD_PAGE_2.zip_label}</option>
-                ) : (
-                  zipOpt.map((zip) =>
-                    zip.code === 'zip' ? (
-                      <option key={'zip'} value="" disabled={true} defaultValue>
-                        {`Postal codes in ${page2.city}`}
-                      </option>
-                    ) : (
-                      <option key={zip.code} value={zip.code} disabled={false}>
-                        {zip.code}
-                      </option>
-                    )
-                  )
-                )}
-              </select>
+
+              <SelectField
+                url={`${URL.states}/${page2.state[0]}/cities/${page2.city}/postalcodes`}
+                prevInfo={page2.state}
+                fieldName="zip"
+                handleDisabledOnChange={handleDisabledOnChange}
+                page2={page2}
+              />
 
               <span className="error-text">{errors_page2.zip}</span>
             </div>

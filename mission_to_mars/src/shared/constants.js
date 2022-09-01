@@ -108,3 +108,9 @@ export const INFO = {
 //btns
 export const BACKTOHOME = 'back to Home page';
 export const CONTINUE = 'CONTINUE';
+
+// urls
+export const URL = {
+  postApplications: 'http://det.api.rs.ey.com/api/applicants',
+  states: 'http://det.api.rs.ey.com/api/states',
+};

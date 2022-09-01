@@ -202,3 +202,13 @@ textarea {
     color: red;
   }
 }
+
+.disabled-true {
+  background-color: rgba($color: $gray-middle, $alpha: 0.7);
+  cursor: no-drop;
+
+  &:option {
+    color: red;
+    background-color: green;
+  }
+}

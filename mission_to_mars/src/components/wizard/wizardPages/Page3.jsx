@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { INFO, WIZARD_PAGE_3 } from '../../../shared/constants';
+import axios from 'axios';
+
+import { INFO, WIZARD_PAGE_3, URL } from '../../../shared/constants';
 import WizardContext from '../../../context/WizardContext';
 import AdditionalList from './additionalFields.jsx/AdditionalList';
-import axios from 'axios';
 
 const Page3 = () => {
   const { formState, handleInput, handlePrevPage, disabled, setOpenPages } =
@@ -17,7 +18,6 @@ const Page3 = () => {
   const { page3, errors_page3 } = formState;
 
   const PAGE = 'page3';
-  const DB = process.env.REACT_APP_DB;
 
   useEffect(() => {
     setOpenPages((prev) => [...prev, PAGE]);
@@ -26,12 +26,50 @@ const Page3 = () => {
 
   const handleSubmit = async () => {
     const submitedValues = { ...formState.page1, ...formState.page2, ...page3 };
+
+    let agricultureSkills_describe = submitedValues.agricultureSkills
+      ? submitedValues.agricultureSkills_describe
+      : false;
+
+    let metalWork_selected = submitedValues.metalWork
+      ? submitedValues.metalWork
+      : false;
+
+    let adressLine2 = submitedValues.addressLine2
+      ? submitedValues.addressLine2
+      : false;
+
+    let convicted_reason_date = submitedValues.convicted
+      ? submitedValues.convicted_reason_date
+      : [];
+
+    const dataToSend = {
+      title: submitedValues.title,
+      firstName: submitedValues.firstName,
+      lastName: submitedValues.lastName,
+      dateOfBirth: submitedValues.birthDate,
+      email: submitedValues.email,
+      residencyDuration: submitedValues.years,
+      doesHaveAgricultureSkills: submitedValues.agricultureSkills,
+      agricultureSkills: agricultureSkills_describe,
+      doesHaveMetalworkSkills: submitedValues.metalWork,
+      metalworkSkills: metalWork_selected,
+      isConvicted: submitedValues.convicted,
+      doesFlyAirplane: submitedValues.airplane,
+      doesDriveCar: submitedValues.car,
+      doesDriveBicycle: submitedValues.bicycle,
+      aid: 'string',
+      address: {
+        addressLine1: submitedValues.adressLine1,
+        addressLine2: adressLine2,
+        state: submitedValues.state[0],
+        city: submitedValues.city,
+        postalCode: submitedValues.zip,
+      },
+      convictions: convicted_reason_date,
+    };
     try {
-      await axios.post(
-        `${DB}/
-        applications-to-mars.json`,
-        submitedValues
-      );
+      await axios.post(URL.postApplications, dataToSend);
       navigate('/', { replace: true });
     } catch (error) {
       console.log(error);

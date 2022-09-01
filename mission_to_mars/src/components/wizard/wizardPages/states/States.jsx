@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { WIZARD_PAGE_2 } from '../../../../shared/constants';
+import { WIZARD_PAGE_2, URL } from '../../../../shared/constants';
 import WizardContext from '../../../../context/WizardContext';
 import { FaTimes } from 'react-icons/fa';
 import './States.scss';
@@ -17,10 +17,9 @@ const States = ({ errors_page2, page2 }) => {
 
   useEffect(() => {
     const controller = new AbortController();
-
     const getStates = async () => {
       try {
-        const { data } = await axios.get('http://det.api.rs.ey.com/api/states');
+        const { data } = await axios.get(URL.states);
         setAllStates(data);
       } catch (error) {
         console.log(error);

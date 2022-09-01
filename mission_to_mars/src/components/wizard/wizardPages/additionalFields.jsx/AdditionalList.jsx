@@ -8,7 +8,7 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
   const { handleInput, handleValueValidation, formState } =
     useContext(WizardContext);
   const [listOfOffenses, setListOfOffenses] = useState([
-    { reason: '', date: '' },
+    { forWhat: '', convictionDate: '' },
   ]);
   const [disabledBtn, setDisabledBtn] = useState(false);
 
@@ -56,7 +56,6 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
             <div className="info additional_info">
               <span>*</span> {WIZARD_PAGE_3.convicted_reason}
             </div>
-            {console.log()}
             <input
               className={
                 'error-' + !!formState.errors_page3[`convicted_reason-${index}`]
