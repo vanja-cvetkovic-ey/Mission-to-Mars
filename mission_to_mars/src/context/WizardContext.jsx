@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { createContext, useReducer, useState, useEffect } from 'react';
 
 import Page1 from '../components/wizard/wizardPages/Page1';
@@ -27,7 +28,6 @@ const formReducer = (state, action) => {
         ...state,
         [action.page]: errors_page,
       };
-
     default:
       return state;
   }
@@ -104,6 +104,10 @@ export const WizardProvider = ({ children }) => {
     convicted: '',
   });
 
+  const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
+
   useEffect(() => {
     setDisabled({
       city: formState.page2.state ? false : true,
@@ -120,7 +124,7 @@ export const WizardProvider = ({ children }) => {
     formState.page3.convicted,
   ]);
 
-  const handleInput = (field, value, page) => {
+  const handleInput = useCallback((field, value, page) => {
     if (value === 'true' || value === 'false') {
       let parsedValue = JSON.parse(value);
       value = parsedValue;
@@ -131,7 +135,7 @@ export const WizardProvider = ({ children }) => {
       field: field,
       payload: value,
     });
-  };
+  }, []);
   const handleValueValidation = (field, value, page) => {
     dispach({
       type: ACTIONS.VALIDATE_VALUE,
@@ -197,6 +201,12 @@ export const WizardProvider = ({ children }) => {
         handlePrevPage,
         displayStep,
         setCurrentPage,
+        modal,
+        setModal,
+        loading,
+        setLoading,
+        serverError,
+        setServerError,
       }}
     >
       {children}

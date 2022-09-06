@@ -27,6 +27,11 @@ const validator = (field, value) => {
       message = 'upsi adress line 1';
     }
   }
+  if (field === 'state' || field === 'city' || field === 'zip') {
+    if (value) {
+      message = 'server error ';
+    }
+  }
   if (field === 'zip') {
     if (!new RegExp(/[0-9]{4,6}/).test(value)) {
       message = 'upsi ';

@@ -4,11 +4,13 @@ import './ProgressBar.scss';
 import WizardContext from '../../../context/WizardContext';
 
 const ProgressBar = () => {
-  const { startWizard, setCurrentPage, openPages } = useContext(WizardContext);
+  const { startWizard, setCurrentPage, openPages, currentPage } =
+    useContext(WizardContext);
 
   const handlePageChange = (page) => {
     if (openPages.includes(page)) {
-      setCurrentPage(page);
+      setCurrentPage(parseInt(page.at(-1)));
+      console.log(parseInt(page.at(-1)));
     }
   };
 
@@ -17,7 +19,9 @@ const ProgressBar = () => {
       <div className="ProgressBar">
         <div className="container flex-row">
           <span
-            className={`page ${openPages.includes('page1')} display-center`}
+            className={`page ${openPages.includes(
+              'page1'
+            )} display-center current-${currentPage === 1}`}
             onClick={() => handlePageChange('page1')}
           >
             1

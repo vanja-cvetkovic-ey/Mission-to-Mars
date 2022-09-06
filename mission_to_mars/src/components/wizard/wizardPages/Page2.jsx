@@ -1,6 +1,6 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useCallback } from 'react';
 
-import { CONTINUE, INFO, WIZARD_PAGE_2, URL } from '../../../shared/constants';
+import { CONTINUE, INFO, WIZARD_PAGE_2 } from '../../../shared/constants';
 import WizardContext from '../../../context/WizardContext';
 import SelectField from './selectFields/SelectField';
 import States from './states/States';
@@ -21,10 +21,13 @@ const Page2 = () => {
   const PAGE = 'page2';
   const ERRORS_PAGE = 'errors_page2';
 
-  useEffect(() => {
+  const pageOpened = useCallback(() => {
     setOpenPages((prev) => [...prev, PAGE]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setOpenPages]);
+
+  useEffect(() => {
+    pageOpened();
+  }, [pageOpened]);
 
   const handleDisabledOnChange = (e) => {
     const { disabled, name, value } = e.target;
@@ -126,38 +129,27 @@ const Page2 = () => {
             </div>
           </div>
           <div className="row flex-row">
-            <States errors_page2 page2={page2} />
+            <States page2={page2} errors_page2={errors_page2} />
             {/* city */}
-            <div className="row-item row-item-3">
-              <div className="info">
-                <span>*</span> {WIZARD_PAGE_2.city_label}
-              </div>
-              <SelectField
-                url={`${URL.states}/${page2.state[0]}/cities`}
-                prevInfo={page2.state}
-                fieldName="city"
-                handleDisabledOnChange={handleDisabledOnChange}
-                page2={page2}
-              />
 
-              <span className="error-text">{errors_page2.city}</span>
-            </div>
+            <SelectField
+              prevInfo={page2.state}
+              fieldName="city"
+              handleDisabledOnChange={handleDisabledOnChange}
+              page2={page2}
+              errors_page2={errors_page2}
+            />
+
             {/* postal code */}
-            <div className="row-item row-item-3">
-              <div className="info">
-                <span>*</span> {WIZARD_PAGE_2.zip_label}
-              </div>
 
-              <SelectField
-                url={`${URL.states}/${page2.state[0]}/cities/${page2.city}/postalcodes`}
-                prevInfo={page2.state}
-                fieldName="zip"
-                handleDisabledOnChange={handleDisabledOnChange}
-                page2={page2}
-              />
-
-              <span className="error-text">{errors_page2.zip}</span>
-            </div>
+            <SelectField
+              city={page2.city}
+              prevInfo={page2.state}
+              fieldName="zip"
+              handleDisabledOnChange={handleDisabledOnChange}
+              page2={page2}
+              errors_page2={errors_page2}
+            />
           </div>
           <div className="row">
             <div className="row-item">

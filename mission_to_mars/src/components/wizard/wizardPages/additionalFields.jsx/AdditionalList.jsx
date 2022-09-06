@@ -20,9 +20,14 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
     handleInput('convicted_reason_date', list, 'page3');
   };
 
+  console.log(listOfOffenses);
+
   const handleOffenseAdd = () => {
-    if (listOfOffenses.at(-1).reason && listOfOffenses.at(-1).date) {
-      setListOfOffenses([...listOfOffenses, { reason: '', date: '' }]);
+    if (listOfOffenses.at(-1).forWhat && listOfOffenses.at(-1).convictionDate) {
+      setListOfOffenses([
+        ...listOfOffenses,
+        { forWhat: '', convictionDate: '' },
+      ]);
     }
   };
   const handleOffenseRemove = (index) => {
@@ -33,16 +38,12 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
   };
 
   useEffect(() => {
-    if (listOfOffenses.at(-1).reason && listOfOffenses.at(-1).date) {
+    if (listOfOffenses.at(-1).forWhat && listOfOffenses.at(-1).convictionDate) {
       setDisabledBtn(true);
       setDisableSubmitBtn(true);
     } else {
       setDisabledBtn(false);
       setDisableSubmitBtn(false);
-    }
-
-    if (Object.values(formState.errors_page3).includes('convicted_reason')) {
-      console.log('jes');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disabled, listOfOffenses, formState.errors_page3]);
@@ -60,8 +61,8 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
               className={
                 'error-' + !!formState.errors_page3[`convicted_reason-${index}`]
               }
-              name="reason"
-              value={row.reason}
+              name="forWhat"
+              value={row.forWhat}
               onChange={(e) => handleOffenseChange(e, index)}
               onBlur={(e) =>
                 handleValueValidation(
@@ -86,8 +87,8 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
                 'error-' + !!formState.errors_page3[`convicted_date-${index}`]
               }
               type="date"
-              name="date"
-              value={row.date}
+              name="convictionDate"
+              value={row.convictionDate}
               onChange={(e) => handleOffenseChange(e, index)}
               onBlur={(e) =>
                 handleValueValidation(

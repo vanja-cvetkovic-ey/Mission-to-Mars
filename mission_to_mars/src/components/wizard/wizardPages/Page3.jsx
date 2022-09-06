@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
@@ -6,12 +6,18 @@ import axios from 'axios';
 import { INFO, WIZARD_PAGE_3, URL } from '../../../shared/constants';
 import WizardContext from '../../../context/WizardContext';
 import AdditionalList from './additionalFields.jsx/AdditionalList';
+import ModalMsg from '../modalMsg/ModalMsg';
 
 const Page3 = () => {
   const { formState, handleInput, handlePrevPage, disabled, setOpenPages } =
     useContext(WizardContext);
   const [metalWorks_arr, setMetalWorks_arrs] = useState([]);
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(true);
+
+  const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
   const textareaRef = useRef();
   let navigate = useNavigate();
 
@@ -19,10 +25,13 @@ const Page3 = () => {
 
   const PAGE = 'page3';
 
-  useEffect(() => {
+  const pageOpened = useCallback(() => {
     setOpenPages((prev) => [...prev, PAGE]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setOpenPages]);
+
+  useEffect(() => {
+    pageOpened();
+  }, [pageOpened]);
 
   const handleSubmit = async () => {
     const submitedValues = { ...formState.page1, ...formState.page2, ...page3 };
@@ -68,11 +77,24 @@ const Page3 = () => {
       },
       convictions: convicted_reason_date,
     };
+    setModal(true);
+    setLoading(true);
     try {
       await axios.post(URL.postApplications, dataToSend);
-      navigate('/', { replace: true });
+      setLoading(false);
+      setSuccess(true);
+      setTimeout(() => {
+        setModal(false);
+        navigate('/', { replace: true });
+      }, 5000);
     } catch (error) {
-      console.log(error);
+      console.log(error.code);
+      setLoading(false);
+      setSuccess(false);
+      // setTimeout(() => {
+      //   setModal(false);
+      //   navigate('/', { replace: true });
+      // }, 3000);
     }
   };
 
@@ -144,7 +166,7 @@ const Page3 = () => {
   );
   return (
     <>
-      {' '}
+      {modal && <ModalMsg loading={loading} success={success} modal={modal} />}
       <div className="container">
         <div className="header flex-row">
           <h3>{WIZARD_PAGE_3.heading}</h3>

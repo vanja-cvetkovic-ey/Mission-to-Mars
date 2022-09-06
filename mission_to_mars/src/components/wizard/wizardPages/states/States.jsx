@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 
 import { WIZARD_PAGE_2, URL } from '../../../../shared/constants';
@@ -6,29 +6,32 @@ import WizardContext from '../../../../context/WizardContext';
 import { FaTimes } from 'react-icons/fa';
 import './States.scss';
 
+const controller = new AbortController();
+
 const States = ({ errors_page2, page2 }) => {
-  const { handleInput } = useContext(WizardContext);
+  const { handleInput, handleValueValidation } = useContext(WizardContext);
   const [allStates, setAllStates] = useState([]);
   const [inputValue, setInputValue] = useState(
     page2.state !== '' ? page2.state : ''
   );
   const [searchResults, setSearchResults] = useState([]);
   const [toggle, setToggle] = useState(false);
+  const [icon, setIcon] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
     const getStates = async () => {
       try {
         const { data } = await axios.get(URL.states);
         setAllStates(data);
       } catch (error) {
-        console.log(error);
+        handleValueValidation('state', true, errors_page2);
       }
     };
     getStates();
     return () => {
       controller.abort();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleInputValueChange = (e) => {
@@ -40,33 +43,36 @@ const States = ({ errors_page2, page2 }) => {
     handleInput('state', '', 'page2');
     handleInput('city', '', 'page2');
     setToggle(true);
+    setIcon(false);
     setSearchResults(allStates);
   };
 
-  useEffect(() => {
-    const filteredResults = allStates.filter((state) =>
+  const filteredResults = useMemo(() => {
+    return allStates.filter((state) =>
       state.name.toLowerCase().includes(inputValue.toLowerCase())
     );
+  }, [allStates, inputValue]);
 
+  useEffect(() => {
     setSearchResults(filteredResults);
-
-    if (filteredResults.length === 1 && !!inputValue) {
-      setToggle(false);
-    } else {
-      setToggle(true);
-    }
 
     if (inputValue === '') {
       handleInput('state', '', 'page2');
       handleInput('city', '', 'page2');
+      setIcon(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputValue]);
+  }, [inputValue, filteredResults, handleInput]);
 
   const handleState = (value) => {
     setInputValue(value[1]);
     handleInput('state', value, 'page2');
     setToggle(false);
+    setIcon(true);
+  };
+
+  const onFocus = () => {
+    setToggle(true);
+    setIcon(true);
   };
 
   return (
@@ -82,14 +88,11 @@ const States = ({ errors_page2, page2 }) => {
           name="state"
           value={inputValue}
           autoComplete="off"
-          // onChange={(e) => handleInput(e.target.name, e.target.value, PAGE)}
           onChange={(e) => handleInputValueChange(e)}
+          onFocus={onFocus}
         />
         <div className="icon">
-          {(!!inputValue && !!searchResults.length && toggle) ||
-            (inputValue !== '' && inputValue !== page2.state[1] && (
-              <FaTimes onClick={handleInputValueDelete} />
-            ))}
+          {icon && <FaTimes onClick={handleInputValueDelete} />}
         </div>
       </div>
 
@@ -107,7 +110,7 @@ const States = ({ errors_page2, page2 }) => {
           ))}
         </div>
       )}
-      <span className="error-text"></span>
+      <span className="error-text">{errors_page2.state}</span>
     </div>
   );
 };
