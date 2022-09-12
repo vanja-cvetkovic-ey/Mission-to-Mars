@@ -10,7 +10,6 @@ const ProgressBar = () => {
   const handlePageChange = (page) => {
     if (openPages.includes(page)) {
       setCurrentPage(parseInt(page.at(-1)));
-      console.log(parseInt(page.at(-1)));
     }
   };
 

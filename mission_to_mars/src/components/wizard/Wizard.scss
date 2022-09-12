@@ -17,7 +17,7 @@
     }
 
     @include for-phone-only {
-      padding: 40px 30px 0;
+      padding: 30px 20px 0;
     }
 
     .header {
@@ -200,6 +200,10 @@ textarea {
   .error {
     margin-top: 0;
     color: red;
+  }
+
+  @include for-phone-only {
+    margin-bottom: 3px !important;
   }
 }
 

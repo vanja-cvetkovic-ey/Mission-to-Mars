@@ -91,10 +91,6 @@ const Page3 = () => {
       console.log(error.code);
       setLoading(false);
       setSuccess(false);
-      // setTimeout(() => {
-      //   setModal(false);
-      //   navigate('/', { replace: true });
-      // }, 3000);
     }
   };
 

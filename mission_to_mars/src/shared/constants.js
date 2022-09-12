@@ -114,3 +114,12 @@ export const URL = {
   postApplications: 'http://det.api.rs.ey.com/api/applicants',
   states: 'http://det.api.rs.ey.com/api/states',
 };
+
+export const SUBMITED_RESPONSE = {
+  resolved_header: 'Thanks for filling out our form!',
+  resolved_text:
+    'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+  reject_header: 'We have a little problem.',
+  reject_text:
+    'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+};

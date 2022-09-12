@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './ModalMsg.scss';
 import Loader from '../../../assets/Loader';
+import { SUBMITED_RESPONSE } from '../../../shared/constants';
 
 const ModalMsg = ({ success, loading }) => {
   let navigate = useNavigate();
@@ -20,26 +21,16 @@ const ModalMsg = ({ success, loading }) => {
         <div className="modal-container display-center">
           {success ? (
             <div className="content">
-              <h2>Thanks for filling out our form!</h2>
-              <div className="p-text">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum
-              </div>
+              <h2>{SUBMITED_RESPONSE.resolved_header}</h2>
+              <div className="p-text">{SUBMITED_RESPONSE.resolved_text}</div>
             </div>
           ) : (
             <div className="content">
-              <h2>We have a little problem.</h2>
-              <div className="p-text">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum
-              </div>
+              <h2>{SUBMITED_RESPONSE.reject_header}</h2>
+              <div className="p-text">{SUBMITED_RESPONSE.reject_text}</div>
             </div>
           )}
-          <div className="footer">
+          <div className="modal-footer">
             <button className="btn-cta" onClick={hanldeClick}>
               Ok
             </button>

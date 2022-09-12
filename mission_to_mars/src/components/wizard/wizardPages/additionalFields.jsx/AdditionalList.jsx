@@ -20,7 +20,14 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
     handleInput('convicted_reason_date', list, 'page3');
   };
 
-  console.log(listOfOffenses);
+  const year = new Date().getFullYear();
+  const month =
+    new Date().getMonth() < 10
+      ? `0${new Date().getMonth()}`
+      : new Date().getMonth();
+  const day =
+    new Date().getDay() < 10 ? `0${new Date().getDay()}` : new Date().getDay();
+  const MAX_DATE = `${year}-${month}-${day}`;
 
   const handleOffenseAdd = () => {
     if (listOfOffenses.at(-1).forWhat && listOfOffenses.at(-1).convictionDate) {
@@ -88,6 +95,7 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
               }
               type="date"
               name="convictionDate"
+              max={MAX_DATE}
               value={row.convictionDate}
               onChange={(e) => handleOffenseChange(e, index)}
               onBlur={(e) =>

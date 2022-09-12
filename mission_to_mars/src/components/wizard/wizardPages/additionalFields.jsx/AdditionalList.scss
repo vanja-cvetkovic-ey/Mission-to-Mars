@@ -12,9 +12,6 @@
 
   .row-item {
     width: 240px;
-    // @include for-tablet-portrait-up {
-    //   margin: 5px 0;
-    // }
 
     &.btns-group {
       display: flex;
@@ -26,6 +23,9 @@
       @include for-tablet-portrait-up {
         width: 100%;
         margin: 10px 0;
+      }
+      @include for-phone-only {
+        flex-direction: row-reverse;
       }
 
       div {
