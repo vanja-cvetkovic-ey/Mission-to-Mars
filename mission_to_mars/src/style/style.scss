@@ -1,2 +1,8 @@
 @import './mixins.scss';
 @import './variables.scss';
+
+@import './base/reset';
+@import './base/typography';
+
+@import './components/buttons';
+@import './components/forms';

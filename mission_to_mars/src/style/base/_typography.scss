@@ -1,0 +1,29 @@
+.p-text {
+  font-size: 16px;
+  line-height: 1.5em;
+  color: $primary;
+  margin: 30px 0;
+
+  @include for-phone-only {
+    margin: 20px 0;
+  }
+}
+
+.error-text {
+  font-size: 12px;
+  line-height: 1em;
+
+  height: 10px;
+  margin: 8px 0 0 5px;
+
+  color: red;
+}
+
+.info {
+  font-size: 14px;
+  line-height: 22px;
+  span {
+    color: red;
+    font-size: 18px;
+  }
+}

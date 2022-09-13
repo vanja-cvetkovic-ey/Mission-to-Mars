@@ -1,0 +1,218 @@
+@import '../../style/style.scss';
+
+.Wizard {
+  background-color: #ffffff;
+  width: 860px;
+  @include for-tablet-portrait-up {
+    max-width: 100%;
+  }
+  @include for-phone-only {
+    max-width: 100%;
+  }
+  .container {
+    padding: 60px 60px 0;
+
+    @include for-tablet-portrait-up {
+      padding: 60px 40px 0;
+    }
+
+    @include for-phone-only {
+      padding: 30px 20px 0;
+    }
+
+    .header {
+      padding-bottom: 25px;
+      border-bottom: 1px solid $gray-middle;
+
+      @include for-phone-only {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 5px;
+      }
+
+      .info {
+        font-style: italic;
+        @include for-phone-only {
+          flex-direction: column;
+          align-items: flex-start;
+          margin: 5px 0;
+        }
+      }
+    }
+
+    .form {
+      .group {
+        .row:nth-child(1) {
+          margin-bottom: 0;
+        }
+        .row:nth-child(2) {
+          margin-top: 0;
+        }
+      }
+      .row {
+        width: 100%;
+        margin: 20px 0;
+        flex-wrap: wrap;
+
+        .row-item,
+        input,
+        select {
+          width: 340px;
+          margin-bottom: 0;
+        }
+        .row-item-3,
+        .row-item-3 input,
+        .row-item-3 select {
+          width: 240px;
+          position: relative;
+        }
+
+        .radio-input,
+        .checkboxes {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          align-items: flex-start;
+          gap: 0 30px;
+
+          padding-left: 20px;
+
+          &.error-true {
+            border: 1px solid red;
+          }
+
+          .row-item {
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 5px 0;
+
+            font-size: 14px;
+
+            input[type='radio'],
+            input[type='checkbox'] {
+              width: auto;
+            }
+          }
+        }
+
+        @include for-tablet-portrait-up {
+          .row-item,
+          input,
+          select {
+            width: 100%;
+            margin-bottom: 0;
+          }
+          .row-item-3,
+          .row-item-3 input,
+          .row-item-3 select {
+            width: 100%;
+            margin-bottom: 0;
+            .info {
+              margin: 0;
+            }
+          }
+        }
+
+        @include for-phone-only {
+          .row-item,
+          input,
+          select,
+          .row-item-3,
+          .row-item-3 input,
+          .row-item-3 select {
+            width: 100%;
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      @include for-tablet-portrait-up {
+        padding: 20px;
+      }
+    }
+  }
+  .footer {
+    width: 100%;
+    height: 100%;
+
+    .flex-row {
+      padding: 20px 40px;
+
+      flex-wrap: wrap;
+
+      background-color: $gray-middle;
+
+      @include for-phone-only {
+        width: 100%;
+        padding: 20px 10px;
+
+        button {
+          margin: 0;
+        }
+      }
+
+      .col {
+        @include for-phone-only {
+          width: 100%;
+        }
+
+        .btn-cta {
+          width: 100%;
+          margin: 25px 0 0 0;
+        }
+
+        .checkbox {
+          &:nth-child(1) {
+            padding-top: 0;
+          }
+          &:nth-child(2) {
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+input {
+  &:disabled {
+    background-color: rgba($color: $gray-middle, $alpha: 0.7);
+  }
+}
+
+textarea {
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid $gray-middle;
+}
+
+.row-item {
+  display: flex;
+  flex-direction: column;
+
+  input[type='text'] {
+    margin-bottom: 0;
+  }
+  .error {
+    margin-top: 0;
+    color: red;
+  }
+
+  @include for-phone-only {
+    margin-bottom: 3px !important;
+  }
+}
+
+.disabled-true {
+  background-color: rgba($color: $gray-middle, $alpha: 0.7);
+  cursor: no-drop;
+
+  &:option {
+    color: red;
+    background-color: green;
+  }
+}

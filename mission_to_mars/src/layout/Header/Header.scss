@@ -9,6 +9,10 @@
 
   background-color: $primary;
 
+  @include for-phone-only {
+    padding: 0 10px;
+  }
+
   .navbar {
     height: 100%;
     width: 100%;

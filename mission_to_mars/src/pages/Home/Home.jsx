@@ -10,7 +10,7 @@ const Home = () => {
       <Carousel />
       <div className="callToAction">
         <div className="p-text">{HOME.cta_text}</div>
-        <Link to="/applicationprocess" className="btn btn-cta">
+        <Link to="/applicationprocess" className="btn-cta">
           {HOME.cta_btn_text}
         </Link>
       </div>
