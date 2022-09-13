@@ -21,8 +21,6 @@ const SelectField = ({
   const [citiesOpt, setCitiesOpt] = useState([]);
   const [zipsOpt, setZipsOpt] = useState([]);
 
-  console.log(page2.city);
-
   const handleCitiesFetch = async () => {
     try {
       setLoadingCity(true);
@@ -43,7 +41,6 @@ const SelectField = ({
       setLoadingCity(false);
     } catch (error) {
       handleValueValidation('city', true, errors_page2);
-      console.log(error);
     }
   };
 
@@ -58,7 +55,6 @@ const SelectField = ({
       setLoadingZip(false);
     } catch (error) {
       handleValueValidation('zip', true, errors_page2);
-      console.log(error);
     }
   };
 

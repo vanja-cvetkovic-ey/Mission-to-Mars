@@ -88,7 +88,6 @@ const Page3 = () => {
         navigate('/', { replace: true });
       }, 5000);
     } catch (error) {
-      console.log(error.code);
       setLoading(false);
       setSuccess(false);
     }
