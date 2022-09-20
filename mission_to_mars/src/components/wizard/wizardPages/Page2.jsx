@@ -3,7 +3,8 @@ import { useContext, useEffect, useCallback } from 'react';
 import { CONTINUE, INFO, WIZARD_PAGE_2 } from '../../../shared/constants';
 import WizardContext from '../../../context/WizardContext';
 import SelectField from './selectFields/SelectField';
-import States from './states/States';
+import States from './customDropdown/States';
+import Zip from './customDropdown/Zip';
 
 const Page2 = () => {
   const {
@@ -141,15 +142,7 @@ const Page2 = () => {
             />
 
             {/* postal code */}
-
-            <SelectField
-              city={page2.city}
-              prevInfo={page2.state}
-              fieldName="zip"
-              handleDisabledOnChange={handleDisabledOnChange}
-              page2={page2}
-              errors_page2={errors_page2}
-            />
+            <Zip page2={page2} errors_page2={errors_page2} />
           </div>
           <div className="row">
             <div className="row-item">

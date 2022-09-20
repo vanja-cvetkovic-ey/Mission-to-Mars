@@ -69,6 +69,7 @@ export const WIZARD_PAGE_2 = {
   state_label: 'State',
   city_label: 'City',
   zip_label: 'Postal Code',
+  zip_placeholder: 'Postal Codes in',
   years_label: 'How many years have you lived there?',
   years: 'years',
 };

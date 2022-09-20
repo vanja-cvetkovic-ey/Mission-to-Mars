@@ -4,7 +4,7 @@ import axios from 'axios';
 import { WIZARD_PAGE_2, URL } from '../../../../shared/constants';
 import WizardContext from '../../../../context/WizardContext';
 import { FaTimes } from 'react-icons/fa';
-import './States.scss';
+import './customDropdown.scss';
 
 const controller = new AbortController();
 
@@ -17,6 +17,8 @@ const States = ({ errors_page2, page2 }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [icon, setIcon] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
+  const [focusStyle, setFocusStyle] = useState(false);
 
   useEffect(() => {
     const getStates = async () => {
@@ -38,12 +40,32 @@ const States = ({ errors_page2, page2 }) => {
     setInputValue(e.target.value);
   };
 
+  useEffect(() => {
+    if (toggle) {
+      setFocusStyle(true);
+    } else {
+      setFocusStyle(false);
+    }
+  }, [toggle]);
+
   const handleInputValueDelete = () => {
-    setInputValue('');
-    handleInput('state', '', 'page2');
-    handleInput('city', '', 'page2');
-    setToggle(true);
-    setIcon(false);
+    if (page2.state === '') {
+      setToggle(false);
+      setIcon(false);
+      setReadOnly(false);
+    } else {
+      setInputValue('');
+      handleInput('state', '', 'page2');
+      handleInput('city', '', 'page2');
+      setToggle(true);
+      setReadOnly(false);
+    }
+
+    if (!filteredResults.length) {
+      setInputValue('');
+      setToggle(true);
+    }
+
     setSearchResults(allStates);
   };
 
@@ -59,6 +81,7 @@ const States = ({ errors_page2, page2 }) => {
     if (inputValue === '') {
       handleInput('state', '', 'page2');
       handleInput('city', '', 'page2');
+      handleInput('zip', '', 'page2');
       setIcon(false);
     }
   }, [inputValue, filteredResults, handleInput]);
@@ -67,11 +90,19 @@ const States = ({ errors_page2, page2 }) => {
     setInputValue(value[1]);
     handleInput('state', value, 'page2');
     setToggle(false);
+    setFocusStyle(false);
     setIcon(true);
+    setReadOnly(true);
   };
 
   const onFocus = () => {
-    setToggle(true);
+    if (!page2.state) {
+      setToggle(true);
+    }
+    if (!readOnly) {
+      setFocusStyle(true);
+    }
+
     setIcon(true);
   };
 
@@ -80,7 +111,7 @@ const States = ({ errors_page2, page2 }) => {
       <div className="info">
         <span>*</span> {WIZARD_PAGE_2.state_label}
       </div>
-      <div className="states">
+      <div className={`customDropdown  focus-${focusStyle}`}>
         <input
           className={`error-${!!errors_page2.state}`}
           type="text"
@@ -90,14 +121,13 @@ const States = ({ errors_page2, page2 }) => {
           autoComplete="off"
           onChange={(e) => handleInputValueChange(e)}
           onFocus={onFocus}
+          readOnly={readOnly}
         />
         <div className="icon">
           {icon && <FaTimes onClick={handleInputValueDelete} />}
         </div>
       </div>
-
-      {((!!inputValue && !!searchResults.length && toggle) ||
-        (!inputValue && !!searchResults && toggle)) && (
+      {toggle && (
         <div className="list">
           {searchResults.map((state) => (
             <div
@@ -110,6 +140,7 @@ const States = ({ errors_page2, page2 }) => {
           ))}
         </div>
       )}
+
       <span className="error-text">{errors_page2.state}</span>
     </div>
   );

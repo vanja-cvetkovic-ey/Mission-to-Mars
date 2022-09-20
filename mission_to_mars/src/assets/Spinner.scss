@@ -1,100 +1,113 @@
 @import './../style/style.scss';
 
-@keyframes ldio-jz1kwg5eoi {
+@keyframes ldio-9dfcd0spdyg {
   0% {
     opacity: 1;
+    backface-visibility: hidden;
+    transform: translateZ(0) scale(1, 1);
   }
   100% {
     opacity: 0;
+    backface-visibility: hidden;
+    transform: translateZ(0) scale(1, 1);
   }
 }
-.ldio-jz1kwg5eoi div {
-  left: 5px;
-  bottom: 5px;
+.ldio-9dfcd0spdyg div > div {
   position: absolute;
-  animation: ldio-jz1kwg5eoi linear 1s infinite;
-  background: $gray-dark;
-  width: 3px;
-  height: 5px;
-  border-radius: 460px/868px;
-  transform-origin: 6px -3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #747480;
+  animation: ldio-9dfcd0spdyg 1s linear infinite;
 }
-.ldio-jz1kwg5eoi div:nth-child(1) {
+.ldio-9dfcd0spdyg div:nth-child(1) > div {
+  left: 70px;
+  top: 41px;
+  animation-delay: -0.875s;
+}
+.ldio-9dfcd0spdyg > div:nth-child(1) {
   transform: rotate(0deg);
-  animation-delay: -0.9166666666666666s;
-  background: $gray-dark;
+  transform-origin: 79px 50px;
 }
-.ldio-jz1kwg5eoi div:nth-child(2) {
-  transform: rotate(30deg);
-  animation-delay: -0.8333333333333334s;
-  background: $gray-dark;
-}
-.ldio-jz1kwg5eoi div:nth-child(3) {
-  transform: rotate(60deg);
+.ldio-9dfcd0spdyg div:nth-child(2) > div {
+  left: 62px;
+  top: 62px;
   animation-delay: -0.75s;
-  background: $gray-dark;
 }
-.ldio-jz1kwg5eoi div:nth-child(4) {
+.ldio-9dfcd0spdyg > div:nth-child(2) {
+  transform: rotate(45deg);
+  transform-origin: 71px 71px;
+}
+.ldio-9dfcd0spdyg div:nth-child(3) > div {
+  left: 41px;
+  top: 70px;
+  animation-delay: -0.625s;
+}
+.ldio-9dfcd0spdyg > div:nth-child(3) {
   transform: rotate(90deg);
-  animation-delay: -0.6666666666666666s;
-  background: $gray-dark;
+  transform-origin: 50px 79px;
 }
-.ldio-jz1kwg5eoi div:nth-child(5) {
-  transform: rotate(120deg);
-  animation-delay: -0.5833333333333334s;
-  background: $gray-dark;
-}
-.ldio-jz1kwg5eoi div:nth-child(6) {
-  transform: rotate(150deg);
+.ldio-9dfcd0spdyg div:nth-child(4) > div {
+  left: 20px;
+  top: 62px;
   animation-delay: -0.5s;
-  background: $gray-dark;
 }
-.ldio-jz1kwg5eoi div:nth-child(7) {
+.ldio-9dfcd0spdyg > div:nth-child(4) {
+  transform: rotate(135deg);
+  transform-origin: 29px 71px;
+}
+.ldio-9dfcd0spdyg div:nth-child(5) > div {
+  left: 12px;
+  top: 41px;
+  animation-delay: -0.375s;
+}
+.ldio-9dfcd0spdyg > div:nth-child(5) {
   transform: rotate(180deg);
-  animation-delay: -0.4166666666666667s;
-  background: $gray-dark;
+  transform-origin: 21px 50px;
 }
-.ldio-jz1kwg5eoi div:nth-child(8) {
-  transform: rotate(210deg);
-  animation-delay: -0.3333333333333333s;
-  background: $gray-dark;
-}
-.ldio-jz1kwg5eoi div:nth-child(9) {
-  transform: rotate(240deg);
+.ldio-9dfcd0spdyg div:nth-child(6) > div {
+  left: 20px;
+  top: 20px;
   animation-delay: -0.25s;
-  background: $gray-dark;
 }
-.ldio-jz1kwg5eoi div:nth-child(10) {
+.ldio-9dfcd0spdyg > div:nth-child(6) {
+  transform: rotate(225deg);
+  transform-origin: 29px 29px;
+}
+.ldio-9dfcd0spdyg div:nth-child(7) > div {
+  left: 41px;
+  top: 12px;
+  animation-delay: -0.125s;
+}
+.ldio-9dfcd0spdyg > div:nth-child(7) {
   transform: rotate(270deg);
-  animation-delay: -0.16666666666666666s;
-  background: $gray-dark;
+  transform-origin: 50px 21px;
 }
-.ldio-jz1kwg5eoi div:nth-child(11) {
-  transform: rotate(300deg);
-  animation-delay: -0.08333333333333333s;
-  background: $gray-dark;
-}
-.ldio-jz1kwg5eoi div:nth-child(12) {
-  transform: rotate(330deg);
+.ldio-9dfcd0spdyg div:nth-child(8) > div {
+  left: 62px;
+  top: 20px;
   animation-delay: 0s;
-  background: $gray-dark;
 }
-.loadingio-spinner-spinner-6fbo2anfzzt {
-  width: 35px;
-  height: 24px;
+.ldio-9dfcd0spdyg > div:nth-child(8) {
+  transform: rotate(315deg);
+  transform-origin: 71px 29px;
+}
+.loadingio-spinner-spin-i0u3mv4ybj {
+  margin-left: 3px;
+  width: 21px;
+  height: 21px;
   display: inline-block;
-  position: absolute;
   overflow: hidden;
-  background: #ffffff;
+  background: none;
 }
-.ldio-jz1kwg5eoi {
+.ldio-9dfcd0spdyg {
   width: 100%;
   height: 100%;
   position: relative;
-  transform: translateZ(0) scale(1);
+  transform: translateZ(0) scale(0.21);
   backface-visibility: hidden;
-  transform-origin: 0 0; /* see note above */
+  transform-origin: 0 0;
 }
-.ldio-jz1kwg5eoi div {
+.ldio-9dfcd0spdyg div {
   box-sizing: content-box;
 }
