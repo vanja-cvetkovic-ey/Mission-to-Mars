@@ -4,20 +4,32 @@ import './Spinner.scss';
 
 const Spinner = () => {
   return (
-    <div className="loadingio-spinner-spinner-6fbo2anfzzt">
-      <div className="ldio-jz1kwg5eoi">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <div className="loadingio-spinner-spin-i0u3mv4ybj">
+      <div className="ldio-9dfcd0spdyg">
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+        </div>
       </div>
     </div>
   );

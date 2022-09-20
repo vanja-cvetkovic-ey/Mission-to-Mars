@@ -1,6 +1,6 @@
 @import '../../../../style/style.scss';
 
-.states {
+.customDropdown {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,10 +11,23 @@
   input {
     border: 0;
     margin: 0;
+    height: 28.44px;
+    outline: none;
 
     &:focus {
       border: none;
-      outline: 0;
+      outline: none;
+    }
+
+    &:disabled {
+      background-color: white;
+    }
+
+    &.disabled-true {
+      background-color: #f4f4f9;
+    }
+    &::placeholder {
+      color: #999999;
     }
   }
 
@@ -60,4 +73,12 @@
   @include for-phone-only {
     width: 100%;
   }
+}
+
+.error-true {
+  border: 1px solid red !important;
+}
+
+.focus-true {
+  border: 1px solid $gray-dark;
 }

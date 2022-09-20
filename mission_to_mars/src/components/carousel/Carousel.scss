@@ -51,6 +51,9 @@
   align-items: auto;
   align-content: space-between;
 
+  animation-name: panel-display;
+  animation-duration: 4s;
+
   &:after {
     display: block;
     margin: 10px;
@@ -146,5 +149,14 @@
   }
   @include for-phone-only {
     display: none;
+  }
+}
+
+@keyframes panel-display {
+  from {
+    display: none;
+  }
+  to {
+    display: flex;
   }
 }
