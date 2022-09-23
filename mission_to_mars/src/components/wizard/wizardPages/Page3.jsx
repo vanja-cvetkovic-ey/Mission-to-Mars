@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Card, Stack, Form, Row, Col } from 'react-bootstrap';
 
 import axios from 'axios';
 
@@ -162,25 +163,29 @@ const Page3 = () => {
   return (
     <>
       {modal && <ModalMsg loading={loading} success={success} modal={modal} />}
-      <div className="container">
-        <div className="header flex-row">
+      <Card.Header className="px-5 py-4">
+        <Stack direction="horizontal" gap={2}>
           <h3>{WIZARD_PAGE_3.heading}</h3>
-          <div className="info">
+
+          <div className="info ms-auto">
             {INFO.form} <span>*</span>
           </div>
-        </div>
-
-        <div className="content form">
-          <div className="row">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.agriculture}
-            </div>
-            <div className="radio-input">
-              <div className="row-item">
-                <input
+        </Stack>
+      </Card.Header>
+      <Card.Body className="p-5">
+        <Row className="mb-2">
+          <Col md={12} lg={6}>
+            <Form.Group className="text-start">
+              <Form.Label>
+                <span className="text-danger">*</span>{' '}
+                {WIZARD_PAGE_3.agriculture}
+              </Form.Label>
+              <Stack direction="horizontal" gap={2}>
+                <Form.Check
                   type="radio"
                   name="agricultureSkills"
                   value={false}
+                  label={WIZARD_PAGE_3.no}
                   checked={!page3.agricultureSkills}
                   onChange={(e) =>
                     handleDeleteDisabledField(
@@ -191,40 +196,47 @@ const Page3 = () => {
                     )
                   }
                 />
-                {WIZARD_PAGE_3.no}
-              </div>
-              <div className="row-item">
-                <input
+                <Form.Check
                   type="radio"
                   name="agricultureSkills"
                   value={true}
+                  label={WIZARD_PAGE_3.yes}
                   checked={page3.agricultureSkills}
                   onChange={(e) =>
                     handleInput(e.target.name, e.target.value, PAGE)
                   }
                 />
-                {WIZARD_PAGE_3.yes}
-              </div>
-            </div>
-          </div>
+              </Stack>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col xs={12}>
+            {page3.agricultureSkills && (
+              <Form.Group className="text-start">
+                <Form.Label>
+                  <span className="text-danger">*</span>{' '}
+                  {WIZARD_PAGE_3.agriculture_describe}
+                </Form.Label>
+                <textarea
+                  className="w-100"
+                  resize="no"
+                  rows={10}
+                  ref={textareaRef}
+                  name="agricultureSkills_describe"
+                  disabled={disabled.agriculture}
+                  onChange={(e) =>
+                    handleDisabledOnChange(e.target.name, disabled.agriculture)
+                  }
+                />
+              </Form.Group>
+            )}
+          </Col>
+        </Row>
+      </Card.Body>
 
-          {page3.agricultureSkills && (
-            <div className="row">
-              <div className="info">
-                <span>*</span> {WIZARD_PAGE_3.agriculture_describe}
-              </div>
-              <textarea
-                rows={10}
-                ref={textareaRef}
-                name="agricultureSkills_describe"
-                disabled={disabled.agriculture}
-                onChange={(e) =>
-                  handleDisabledOnChange(e.target.name, disabled.agriculture)
-                }
-              />
-            </div>
-          )}
-
+      <div className="container">
+        <div className="content form">
           <div className="row">
             <div className="info">
               <span>*</span> {WIZARD_PAGE_3.metalwork}

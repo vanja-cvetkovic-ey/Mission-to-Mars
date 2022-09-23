@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState, useMemo } from 'react';
+import { Form, InputGroup, ListGroup, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 import { WIZARD_PAGE_2, URL } from '../../../../shared/constants';
 import WizardContext from '../../../../context/WizardContext';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaSortDown } from 'react-icons/fa';
 import './customDropdown.scss';
 
 const controller = new AbortController();
@@ -87,6 +88,7 @@ const States = ({ errors_page2, page2 }) => {
   }, [inputValue, filteredResults, handleInput]);
 
   const handleState = (value) => {
+    console.log(value);
     setInputValue(value[1]);
     handleInput('state', value, 'page2');
     setToggle(false);
@@ -107,42 +109,47 @@ const States = ({ errors_page2, page2 }) => {
   };
 
   return (
-    <div className="row-item row-item-3 states-row-item">
-      <div className="info">
-        <span>*</span> {WIZARD_PAGE_2.state_label}
-      </div>
-      <div className={`customDropdown  focus-${focusStyle}`}>
-        <input
-          className={`error-${!!errors_page2.state}`}
+    <Form.Group className="position-relative" controlId="formBasicEmail">
+      <Form.Label>{WIZARD_PAGE_2.state_label}</Form.Label>
+      <InputGroup>
+        <Form.Control
           type="text"
           placeholder={WIZARD_PAGE_2.state_label}
+          aria-label={WIZARD_PAGE_2.state_label}
+          aria-describedby={WIZARD_PAGE_2.state_label}
           name="state"
-          value={inputValue}
+          value={!!page2.adressLine2 ? page2.adressLine2 : inputValue}
           autoComplete="off"
           onChange={(e) => handleInputValueChange(e)}
           onFocus={onFocus}
           readOnly={readOnly}
         />
-        <div className="icon">
-          {icon && <FaTimes onClick={handleInputValueDelete} />}
-        </div>
-      </div>
+        <Button
+          variant="outline-secondary"
+          onClick={icon ? handleInputValueDelete : onFocus}
+        >
+          {icon ? (
+            <FaTimes style={{ fontSize: '12px' }} />
+          ) : (
+            <FaSortDown style={{ fontSize: '12px' }} />
+          )}
+        </Button>
+      </InputGroup>
+
       {toggle && (
-        <div className="list">
+        <ListGroup className="list position-absolute">
           {searchResults.map((state) => (
-            <div
+            <ListGroup.Item
               key={state.tla}
               className="item"
               onClick={() => handleState([state.tla, state.name])}
             >
               {state.name}
-            </div>
+            </ListGroup.Item>
           ))}
-        </div>
+        </ListGroup>
       )}
-
-      <span className="error-text">{errors_page2.state}</span>
-    </div>
+    </Form.Group>
   );
 };
 
