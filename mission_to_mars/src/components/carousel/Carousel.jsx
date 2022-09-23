@@ -6,6 +6,7 @@ import CardCarousel from './CardCarousel';
 
 import Loader from '../../assets/Loader';
 import useWindowSize from '../../hooks/useWindowSize';
+import { Col, Container, Row, Button, Stack } from 'react-bootstrap';
 
 const IMAGES_APIKEY = process.env.REACT_APP_IMAGES_APIKEY;
 const IMAGES_COUNT = 32;
@@ -40,16 +41,16 @@ const Carousel = () => {
   }, []);
 
   const handleAmountActiveImgs = useCallback(() => {
-    if (width > 1280) {
+    if (width > 1200) {
       setAmount_activeImgs(4);
     }
-    if ((width > 900) & (width <= 1280)) {
+    if ((width > 992) & (width <= 1200)) {
       setAmount_activeImgs(3);
     }
-    if ((width > 599) & (width <= 900)) {
+    if ((width > 768) & (width <= 992)) {
       setAmount_activeImgs(2);
     }
-    if (width <= 599) {
+    if (width <= 768) {
       setAmount_activeImgs(1);
     }
   }, [width]);
@@ -110,7 +111,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className="Carousel">
+    <>
       {loading && <Loader />}
       {err && (
         <h4 className="error msg">
@@ -119,38 +120,43 @@ const Carousel = () => {
         </h4>
       )}
       {activeImgs && (
-        <>
-          <div className="flex-row">
+        <Row className="g-0">
+          <Col xs={1} className="my-auto">
             {first !== 0 ? (
-              <div className="arrow" onClick={handlePrev}>
+              <Button className="arrow" onClick={handlePrev}>
                 <AiOutlineArrowLeft />
-              </div>
+              </Button>
             ) : (
-              <div className="arrow disabled">
+              <Button className="arrow disabled">
                 <AiOutlineArrowLeft />
-              </div>
+              </Button>
             )}
-
-            <div className="panel">
+          </Col>
+          <Col xs={10} className="g-0">
+            <Row style={{ maxHeight: '100%' }}>
               {activeImgs.map(({ url, title, explanation }) => (
-                <CardCarousel
-                  key={title}
-                  url={url}
-                  name={title}
-                  explanation={explanation}
-                />
+                <Col sm={12} md={6} lg={4} xl={3}>
+                  <CardCarousel
+                    key={title}
+                    url={url}
+                    name={title}
+                    explanation={explanation}
+                  />
+                </Col>
               ))}
-            </div>
+            </Row>
+          </Col>
+          <Col xs={1} className="my-auto">
             {last !== IMAGES_COUNT ? (
-              <div className="arrow" onClick={handleNext}>
+              <Button className="arrow" onClick={handleNext}>
                 <AiOutlineArrowRight />
-              </div>
+              </Button>
             ) : (
-              <div className="arrow disabled">
+              <Button className="arrow disabled">
                 <AiOutlineArrowRight />
-              </div>
+              </Button>
             )}
-          </div>
+          </Col>
           <div className="dots">
             {amount_activeImgs >= 3 && (
               <>
@@ -168,9 +174,9 @@ const Carousel = () => {
               </>
             )}
           </div>
-        </>
+        </Row>
       )}
-    </div>
+    </>
   );
 };
 

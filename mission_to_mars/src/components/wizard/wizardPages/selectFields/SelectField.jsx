@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
+import { Form, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
 import WizardContext from '../../../../context/WizardContext';
 import { WIZARD_PAGE_2, URL } from '../../../../shared/constants';
-import Spinner from '../../../../assets/Spinner';
+// import Spinner from '../../../../assets/Spinner';
 
 const controller = new AbortController();
 
@@ -55,16 +56,17 @@ const SelectField = ({
   }, [prevInfo]);
 
   const selectCity = (
-    <div className="row-item row-item-3">
-      <div className="info info-spinner">
+    <Form.Group>
+      <Form.Label>
         <span>*</span> {WIZARD_PAGE_2.city_label}
-        {!!prevInfo && loadingCity && <Spinner />}
-      </div>
-      <select
+        {!!prevInfo && loadingCity && (
+          <Spinner animation="border" size="sm" className="mx-1" />
+        )}
+      </Form.Label>
+      <Form.Select
         name="city"
         data-live-search="true"
         value={page2.city}
-        className={`disabled-${loadingCity}`}
         disabled={loadingCity}
         onChange={(e) => handleDisabledOnChange(e)}
       >
@@ -83,9 +85,39 @@ const SelectField = ({
             )
           )
         )}
-      </select>
-      <span className="error-text">{errors_page2.city}</span>
-    </div>
+      </Form.Select>
+    </Form.Group>
+    // <div className="row-item row-item-3">
+    //   <div className="info info-spinner">
+    //     <span>*</span> {WIZARD_PAGE_2.city_label}
+    //     {!!prevInfo && loadingCity && <Spinner />}
+    //   </div>
+    //   <select
+    //     name="city"
+    //     data-live-search="true"
+    //     value={page2.city}
+    //     className={`disabled-${loadingCity}`}
+    //     disabled={loadingCity}
+    //     onChange={(e) => handleDisabledOnChange(e)}
+    //   >
+    //     {disabled.city || citiesOpt.length < 2 || loadingCity ? (
+    //       <option>{WIZARD_PAGE_2.city_label}</option>
+    //     ) : (
+    //       citiesOpt.map((city) =>
+    //         city.name === 'city' ? (
+    //           <option disabled={true} value="" key="city" defaultValue>
+    //             {`${page2.state[0]} cities:`}
+    //           </option>
+    //         ) : (
+    //           <option key={city.name} value={city.name} disabled={false}>
+    //             {city.name}
+    //           </option>
+    //         )
+    //       )
+    //     )}
+    //   </select>
+    //   <span className="error-text">{errors_page2.city}</span>
+    // </div>
   );
 
   return (fieldName = selectCity);

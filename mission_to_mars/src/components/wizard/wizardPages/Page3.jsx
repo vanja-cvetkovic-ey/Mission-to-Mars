@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Card, Stack, Form, Row, Col, Button } from 'react-bootstrap';
 
 import axios from 'axios';
 
@@ -151,69 +152,72 @@ const Page3 = () => {
   }, [page3]);
 
   const submitBtn = disableSubmitBtn ? (
-    <button className="btn-cta" onClick={() => handleSubmit()}>
-      submit
-    </button>
+    <Button variant="dark" className="ms-auto" onClick={() => handleSubmit()}>
+      Submit
+    </Button>
   ) : (
-    <button className="btn-cta" disabled>
-      submit
-    </button>
+    <Button variant="dark" className="ms-auto" disabled>
+      Submit
+    </Button>
   );
+
   return (
     <>
-      {modal && <ModalMsg loading={loading} success={success} modal={modal} />}
-      <div className="container">
-        <div className="header flex-row">
+      {modal && <ModalMsg loading={loading} success={success} show={modal} />}
+      <Card.Header className="px-5 py-4 bg-transparent">
+        <Stack direction="horizontal" gap={2}>
           <h3>{WIZARD_PAGE_3.heading}</h3>
-          <div className="info">
+
+          <div className="info ms-auto">
             {INFO.form} <span>*</span>
           </div>
-        </div>
-
-        <div className="content form">
-          <div className="row">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.agriculture}
-            </div>
-            <div className="radio-input">
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="agricultureSkills"
-                  value={false}
-                  checked={!page3.agricultureSkills}
-                  onChange={(e) =>
-                    handleDeleteDisabledField(
-                      'agricultureSkills_describe',
-                      e.target.name,
-                      e.target.value,
-                      PAGE
-                    )
-                  }
-                />
-                {WIZARD_PAGE_3.no}
-              </div>
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="agricultureSkills"
-                  value={true}
-                  checked={page3.agricultureSkills}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.yes}
-              </div>
-            </div>
-          </div>
-
+        </Stack>
+      </Card.Header>
+      <Card.Body className="p-5">
+        <Row>
+          <Form.Group className="text-start">
+            <Form.Label>
+              <span className="text-danger">*</span> {WIZARD_PAGE_3.agriculture}
+            </Form.Label>
+            <Stack direction="horizontal" gap={2}>
+              <Form.Check
+                type="radio"
+                name="agricultureSkills"
+                value={false}
+                label={WIZARD_PAGE_3.no}
+                checked={!page3.agricultureSkills}
+                onChange={(e) =>
+                  handleDeleteDisabledField(
+                    'agricultureSkills_describe',
+                    e.target.name,
+                    e.target.value,
+                    PAGE
+                  )
+                }
+              />
+              <Form.Check
+                type="radio"
+                name="agricultureSkills"
+                value={true}
+                label={WIZARD_PAGE_3.yes}
+                checked={page3.agricultureSkills}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+            </Stack>
+          </Form.Group>
+        </Row>
+        <Row className="mb-3">
           {page3.agricultureSkills && (
-            <div className="row">
-              <div className="info">
-                <span>*</span> {WIZARD_PAGE_3.agriculture_describe}
-              </div>
+            <Form.Group className="text-start">
+              <Form.Label>
+                <span className="text-danger">*</span>{' '}
+                {WIZARD_PAGE_3.agriculture_describe}
+              </Form.Label>
               <textarea
+                className="w-100"
+                resize="no"
                 rows={10}
                 ref={textareaRef}
                 name="agricultureSkills_describe"
@@ -222,233 +226,227 @@ const Page3 = () => {
                   handleDisabledOnChange(e.target.name, disabled.agriculture)
                 }
               />
-            </div>
+            </Form.Group>
           )}
-
-          <div className="row">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.metalwork}
-            </div>
-            <div className="radio-input">
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="metalWork"
-                  value={false}
-                  checked={!page3.metalWork}
-                  onChange={(e) =>
-                    handleDeleteDisabledField(
-                      'metalWork_selected',
-                      e.target.name,
-                      e.target.value,
-                      PAGE
-                    )
-                  }
-                />
-                No
-              </div>
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="metalWork"
-                  value={true}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                  checked={page3.metalWork}
-                />
-                Yes
-              </div>
-            </div>
-          </div>
-
+        </Row>
+        {/* ********* */}
+        {/* metalwork */}
+        <Row className="mt-4">
+          <Form.Group className="text-start">
+            <Form.Label>
+              <span className="text-danger">*</span> {WIZARD_PAGE_3.agriculture}
+            </Form.Label>
+            <Stack direction="horizontal" gap={2}>
+              <Form.Check
+                type="radio"
+                name="metalWork"
+                value={false}
+                label={WIZARD_PAGE_3.no}
+                checked={!page3.metalWork}
+                onChange={(e) =>
+                  handleDeleteDisabledField(
+                    'metalWork_selected',
+                    e.target.name,
+                    e.target.value,
+                    PAGE
+                  )
+                }
+              />
+              <Form.Check
+                type="radio"
+                name="metalWork"
+                value={true}
+                label={WIZARD_PAGE_3.yes}
+                checked={page3.metalWork}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+            </Stack>
+          </Form.Group>
+        </Row>
+        <Row>
           {page3.metalWork && (
-            <div className="row">
-              <div className="info">
-                <span>*</span> {WIZARD_PAGE_3.metalwork_set}
-              </div>
+            <Form.Group className="text-start">
+              <Form.Label>
+                <span className="text-danger">*</span>{' '}
+                {WIZARD_PAGE_3.metalwork_set}
+              </Form.Label>
 
-              <div
-                className={`checkboxes error-${!!errors_page3.metalWork_selected}`}
-              >
-                {WIZARD_PAGE_3.checkboxes_MetalWorks.map((metalwork) => (
-                  <div key={metalwork.value} className="row-item">
-                    <input
-                      type="checkbox"
-                      id={metalwork.value}
-                      value={metalwork.value}
-                      disabled={disabled.metalwork}
-                      onClick={(e) =>
-                        handleDisabledOnChange(
-                          'metalWork_selected',
-                          e.target.disabled,
-                          e.target.checked,
-                          e.target.value
-                        )
-                      }
-                    />
-                    <label htmlFor="metalwork.value">{metalwork.label}</label>
-                  </div>
-                ))}
-              </div>
+              <Stack direction="horizontal" gap={3}>
+                <Row>
+                  {WIZARD_PAGE_3.checkboxes_MetalWorks.map((metalwork) => (
+                    <Col xs="auto" className="m-1">
+                      <Form.Check
+                        type="checkbox"
+                        id={metalwork.value}
+                        value={metalwork.value}
+                        disabled={disabled.metalwork}
+                        label={metalwork.label}
+                        onClick={(e) =>
+                          handleDisabledOnChange(
+                            'metalWork_selected',
+                            e.target.disabled,
+                            e.target.checked,
+                            e.target.value
+                          )
+                        }
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              </Stack>
               <span className="error-text">
                 {errors_page3.metalWork_selected}
               </span>
-            </div>
+            </Form.Group>
           )}
-          {/* convicted */}
-
-          <div className="row ">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.convicted}
-            </div>
-            <div className="radio-input">
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="convicted"
-                  value={false}
-                  checked={!page3.convicted}
-                  onChange={(e) =>
-                    handleDeleteDisabledField(
-                      'convicted_reason_date',
-                      e.target.name,
-                      e.target.value,
-                      PAGE
-                    )
-                  }
-                />
-                {WIZARD_PAGE_3.no}
-              </div>
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="convicted"
-                  value={true}
-                  checked={page3.convicted}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.yes}
-              </div>
-            </div>
-          </div>
-          {page3.convicted && (
-            <div className="group">
-              <AdditionalList
-                disabled={disabled.convicted}
-                setDisableSubmitBtn={setDisableSubmitBtn}
+        </Row>
+        {/* **************** */}
+        {/* convicted */}
+        <Row className="mt-4">
+          <Form.Group className="text-start">
+            <Form.Label>
+              <span className="text-danger">*</span> {WIZARD_PAGE_3.convicted}
+            </Form.Label>
+            <Stack direction="horizontal" gap={2}>
+              <Form.Check
+                type="radio"
+                name="convicted"
+                value={false}
+                label={WIZARD_PAGE_3.no}
+                checked={!page3.convicted}
+                onChange={(e) =>
+                  handleDeleteDisabledField(
+                    'convicted_reason_date',
+                    e.target.name,
+                    e.target.value,
+                    PAGE
+                  )
+                }
               />
-            </div>
-          )}
+              <Form.Check
+                type="radio"
+                name="convicted"
+                value={true}
+                label={WIZARD_PAGE_3.yes}
+                checked={page3.convicted}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+            </Stack>
+          </Form.Group>
+        </Row>
 
-          <div className="row ">
-            <div className="info">
-              <span>*</span>
-              {WIZARD_PAGE_3.airplane}
-            </div>
-            <div className="radio-input">
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="airplane"
-                  value={false}
-                  checked={!page3.airplane}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.no}
-              </div>
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="airplane"
-                  value={true}
-                  checked={page3.airplane}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.yes}
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.car}
-            </div>
-            <div className="radio-input">
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="car"
-                  value={false}
-                  checked={!page3.car}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.no}
-              </div>
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="car"
-                  value={true}
-                  checked={page3.car}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.yes}
-              </div>
-            </div>
-          </div>
-
-          <div className="row ">
-            <div className="info">
-              <span>*</span> {WIZARD_PAGE_3.bicycle}
-            </div>
-            <div className="radio-input">
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="bicycle"
-                  value={false}
-                  checked={!page3.bicycle}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.no}
-              </div>
-              <div className="row-item">
-                <input
-                  type="radio"
-                  name="bicycle"
-                  value={true}
-                  checked={page3.bicycle}
-                  onChange={(e) =>
-                    handleInput(e.target.name, e.target.value, PAGE)
-                  }
-                />
-                {WIZARD_PAGE_3.yes}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="footer">
-        <div className="flex-row">
-          <button className="btn" onClick={handlePrevPage}>
-            Back
-          </button>
+        {page3.convicted && (
+          <Row>
+            <AdditionalList
+              disabled={disabled.convicted}
+              setDisableSubmitBtn={setDisableSubmitBtn}
+            />
+          </Row>
+        )}
+        {/* ************ */}
+        {/* airplane */}
+        <Row className="mt-4">
+          <Form.Group className="text-start">
+            <Form.Label>
+              <span className="text-danger">*</span> {WIZARD_PAGE_3.airplane}
+            </Form.Label>
+            <Stack direction="horizontal" gap={2}>
+              <Form.Check
+                type="radio"
+                name="airplane"
+                value={false}
+                label={WIZARD_PAGE_3.no}
+                checked={!page3.airplane}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+              <Form.Check
+                type="radio"
+                name="airplane"
+                value={true}
+                label={WIZARD_PAGE_3.yes}
+                checked={page3.airplane}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+            </Stack>
+          </Form.Group>
+        </Row>
+        {/* ************ */}
+        {/* car */}
+        <Row className="mt-4">
+          <Form.Group className="text-start">
+            <Form.Label>
+              <span className="text-danger">*</span> {WIZARD_PAGE_3.car}
+            </Form.Label>
+            <Stack direction="horizontal" gap={2}>
+              <Form.Check
+                type="radio"
+                name="car"
+                value={false}
+                label={WIZARD_PAGE_3.no}
+                checked={!page3.car}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+              <Form.Check
+                type="radio"
+                name="car"
+                value={true}
+                label={WIZARD_PAGE_3.yes}
+                checked={page3.car}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+            </Stack>
+          </Form.Group>
+        </Row>
+        {/* ************ */}
+        {/*  bicycle */}
+        <Row className="mt-4">
+          <Form.Group className="text-start">
+            <Form.Label>
+              <span className="text-danger">*</span> {WIZARD_PAGE_3.bicycle}
+            </Form.Label>
+            <Stack direction="horizontal" gap={2}>
+              <Form.Check
+                type="radio"
+                name="bicycle"
+                value={false}
+                label={WIZARD_PAGE_3.no}
+                checked={!page3.bicycle}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+              <Form.Check
+                type="radio"
+                name="bicycle"
+                value={true}
+                label={WIZARD_PAGE_3.yes}
+                checked={page3.bicycle}
+                onChange={(e) =>
+                  handleInput(e.target.name, e.target.value, PAGE)
+                }
+              />
+            </Stack>
+          </Form.Group>
+        </Row>
+      </Card.Body>
+      <Card.Footer className="px-5 py-3">
+        <Stack direction="horizontal">
+          <Button variant="outline-secondary">Back</Button>
           {submitBtn}
-        </div>
-      </div>
+        </Stack>
+      </Card.Footer>
     </>
   );
 };

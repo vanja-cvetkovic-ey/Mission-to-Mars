@@ -1,4 +1,5 @@
 import { useContext, useEffect, useCallback } from 'react';
+import { Card, Stack, Row, Form, Col, Button } from 'react-bootstrap';
 
 import { CONTINUE, INFO, WIZARD_PAGE_2 } from '../../../shared/constants';
 import WizardContext from '../../../context/WizardContext';
@@ -42,33 +43,35 @@ const Page2 = () => {
   }, [handleContinueBtn, errors_page2, page2]);
 
   const continueBtn = disabledBtn ? (
-    <button className="btn-cta" disabled>
+    <Button variant="dark" className="ms-auto" disabled>
       {CONTINUE}
-    </button>
+    </Button>
   ) : (
-    <button className="btn-cta" onClick={handleNextPage}>
+    <Button variant="dark" className=" ms-auto" onClick={handleNextPage}>
       {CONTINUE}
-    </button>
+    </Button>
   );
 
   return (
     <>
-      {' '}
-      <div className="container">
-        <div className="header flex-row">
+      <Card.Header className="px-5 py-4 bg-transparent">
+        <Stack direction="horizontal" gap={2}>
           <h3>{WIZARD_PAGE_2.heading}</h3>
-          <div className="info">
+
+          <div className="info ms-auto">
             {INFO.form} <span>*</span>
           </div>
-        </div>
-        <div className="content form">
-          <div className="row">
-            <div className="row-item">
-              <div className="info">
+        </Stack>
+      </Card.Header>
+      <Card.Body className="p-5">
+        <Row className="mb-3">
+          <Col md={12} lg={6}>
+            <Form.Group className="text-start">
+              <Form.Label>
                 <span>*</span> {WIZARD_PAGE_2.email_label}
-              </div>
-              <input
-                className={`error-${!!errors_page2.email}`}
+              </Form.Label>
+              <Form.Control
+                className={!!errors_page2.email && 'border-danger'}
                 type="email"
                 placeholder={WIZARD_PAGE_2.email_placeholder}
                 name="email"
@@ -84,18 +87,22 @@ const Page2 = () => {
                   )
                 }
               />
-              <span className="error-text">{errors_page2.email}</span>
-            </div>
-          </div>
-          {/* adress */}
-          <div className="row flex-row">
-            {/* adress line 1 */}
-            <div className="row-item">
-              <div className="info">
+              <Form.Text className="text-danger">
+                {errors_page2.email}
+              </Form.Text>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        {/* adress */}
+        <Row className="mb-3">
+          <Col md={12} lg={6}>
+            <Form.Group className="text-start">
+              <Form.Label>
                 <span>*</span> {WIZARD_PAGE_2.adress1_label}
-              </div>
-              <input
-                className={`error-${!!errors_page2.adressLine1}`}
+              </Form.Label>
+              <Form.Control
+                className={!!errors_page2.adressLine1 && 'border-danger'}
                 type="text"
                 placeholder={WIZARD_PAGE_2.adress1_label}
                 name="adressLine1"
@@ -111,28 +118,42 @@ const Page2 = () => {
                   )
                 }
               />
-              <span className="error-text">{errors_page2.adressLine1}</span>
-            </div>
-            {/* adress line 2 */}
-            <div className="row-item">
-              <div className="info">{WIZARD_PAGE_2.adress2_label}</div>
-              <input
-                className={`error-${!!errors_page2.adressLine2}`}
+              <Form.Text className="text-danger">
+                {errors_page2.adressLine1}
+              </Form.Text>
+            </Form.Group>
+          </Col>
+          <Col md={12} lg={6}>
+            <Form.Group className="text-start">
+              <Form.Label>{WIZARD_PAGE_2.adress2_label}</Form.Label>
+              <Form.Control
+                className={!!errors_page2.adressLine2 && 'border-danger'}
                 type="text"
-                placeholder={WIZARD_PAGE_2.adress1_label}
-                name="adressLine2"
+                placeholder={WIZARD_PAGE_2.adress2_label}
+                name="adressLine1"
                 value={page2.adressLine2}
                 onChange={(e) =>
                   handleInput(e.target.name, e.target.value, PAGE)
                 }
+                onBlur={(e) =>
+                  handleValueValidation(
+                    e.target.name,
+                    e.target.value,
+                    ERRORS_PAGE
+                  )
+                }
               />
-              <span className="error-text"></span>
-            </div>
-          </div>
-          <div className="row flex-row">
+              <Form.Text className="text-danger">
+                {errors_page2.adressLine2}
+              </Form.Text>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="mb-4">
+          <Col md={12} lg={4} className="text-start">
             <States page2={page2} errors_page2={errors_page2} />
-            {/* city */}
-
+          </Col>
+          <Col md={12} lg={4} className="text-start">
             <SelectField
               prevInfo={page2.state}
               fieldName="city"
@@ -140,20 +161,22 @@ const Page2 = () => {
               page2={page2}
               errors_page2={errors_page2}
             />
-
-            {/* postal code */}
+          </Col>
+          <Col md={12} lg={4} className="text-start">
             <Zip page2={page2} errors_page2={errors_page2} />
-          </div>
-          <div className="row">
-            <div className="row-item">
-              <div className="info">
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col md={12} lg={6}>
+            <Form.Group className="text-start">
+              <Form.Label>
                 <span>*</span> {WIZARD_PAGE_2.years_label}
-              </div>
-              <input
-                className={`error-${!!errors_page2.years}`}
+              </Form.Label>
+              <Form.Control
+                className={!!errors_page2.years && 'border-danger'}
+                style={{ width: '200px' }}
                 type="text"
-                placeholder={WIZARD_PAGE_2.years}
-                style={{ width: '120px' }}
+                placeholder={WIZARD_PAGE_2.years_label}
                 name="years"
                 value={page2.years}
                 onChange={(e) =>
@@ -167,19 +190,20 @@ const Page2 = () => {
                   )
                 }
               />
-              <span className="error-text">{errors_page2.years}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="footer">
-        <div className="flex-row">
-          <button className="btn" onClick={handlePrevPage}>
-            Back
-          </button>
+              <Form.Text className="text-danger">
+                {errors_page2.years}
+              </Form.Text>
+            </Form.Group>
+          </Col>
+        </Row>
+      </Card.Body>
+
+      <Card.Footer className="px-5 py-3">
+        <Stack direction="horizontal">
+          <Button variant="outline-secondary">Back</Button>
           {continueBtn}
-        </div>
-      </div>
+        </Stack>
+      </Card.Footer>
     </>
   );
 };

@@ -8,22 +8,31 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyNotice from './pages/PrivacyNotice';
 import ErrorPage from './pages/ErrorPage';
 import Footer from './layout/Footer/Footer';
+import { Container } from 'react-bootstrap';
 
 function App() {
   return (
     <div className="App">
       <Header />
       <div className="main">
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <Container fluid>
+          <Routes>
+            <Route path="/" element={<Home />} />
 
-          <Route path="/applicationprocess" element={<Applicationprocess />} />
+            <Route
+              path="/applicationprocess"
+              element={<Applicationprocess />}
+            />
 
-          <Route path="/privacynotices" element={<PrivacyNotice />} />
-          <Route path="/termaandconditions" element={<TermsAndConditions />} />
+            <Route path="/privacynotices" element={<PrivacyNotice />} />
+            <Route
+              path="/termaandconditions"
+              element={<TermsAndConditions />}
+            />
 
-          <Route path="/*" element={<ErrorPage />} />
-        </Routes>
+            <Route path="/*" element={<ErrorPage />} />
+          </Routes>
+        </Container>
       </div>
       <Footer />
     </div>

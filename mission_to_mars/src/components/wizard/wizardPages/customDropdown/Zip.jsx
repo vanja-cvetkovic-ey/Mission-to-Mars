@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState, useMemo } from 'react';
+import { Form, Button, ListGroup, InputGroup, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
+import { FaSortDown } from 'react-icons/fa';
 import { WIZARD_PAGE_2, URL } from '../../../../shared/constants';
 import WizardContext from '../../../../context/WizardContext';
-import Spinner from '../../../../assets/Spinner';
 import './customDropdown.scss';
 
 const controller = new AbortController();
@@ -93,14 +94,22 @@ const Zip = ({ page2, errors_page2 }) => {
     setFocusStyle(true);
   };
 
+  const btnHandler = () => {
+    if (!disabled) {
+      setToggle(!toggle);
+    }
+  };
+
   return (
-    <div className={`row-item row-item-3 states-row-item`}>
-      <div className="info info-spinner">
-        <span>*</span> {WIZARD_PAGE_2.zip_label}
-        {!!page2.city && loadingZip && <Spinner />}
-      </div>
-      <div className={`customDropdown  focus-${focusStyle}`}>
-        <input
+    <Form.Group className="position-relative">
+      <Form.Label>
+        <span>*</span> {WIZARD_PAGE_2.zip_label}{' '}
+        {!!page2.city && loadingZip && (
+          <Spinner animation="border" size="sm" className="mx-1" />
+        )}
+      </Form.Label>
+      <InputGroup>
+        <Form.Control
           className={`disabled-${disabled}`}
           type="text"
           placeholder={placeholder_text}
@@ -112,23 +121,64 @@ const Zip = ({ page2, errors_page2 }) => {
           onFocus={onFocus}
           disabled={disabled}
         />
-      </div>
+        <Button
+          variant="outline-secondary"
+          onClick={btnHandler}
+          disabled={disabled}
+        >
+          <FaSortDown style={{ fontSize: '12px' }} />
+        </Button>
+      </InputGroup>
       {toggle && !!searchResults.length && (
-        <div className="list">
+        <ListGroup className="list position-absolute">
           {searchResults.map((zip) => (
-            <div
+            <ListGroup.Item
               key={zip.code}
               className="item"
               onClick={() => handleZip(zip.code)}
             >
               {zip.code}
-            </div>
+            </ListGroup.Item>
           ))}
-        </div>
+        </ListGroup>
       )}
+    </Form.Group>
 
-      <span className="error-text">{errors_page2.zip}</span>
-    </div>
+    // <div className={`row-item row-item-3 states-row-item`}>
+    //   <div className="info info-spinner">
+    //     <span>*</span> {WIZARD_PAGE_2.zip_label}
+    //     {!!page2.city && loadingZip && <Spinner />}
+    //   </div>
+    //   <div className={`customDropdown  focus-${focusStyle}`}>
+    //     <input
+    //       className={`disabled-${disabled}`}
+    //       type="text"
+    //       placeholder={placeholder_text}
+    //       name="state"
+    //       value={inputValue}
+    //       autoComplete="off"
+    //       maxLength="5"
+    //       onChange={(e) => handleInputValueChange(e)}
+    //       onFocus={onFocus}
+    //       disabled={disabled}
+    //     />
+    //   </div>
+    //   {toggle && !!searchResults.length && (
+    //     <div className="list">
+    //       {searchResults.map((zip) => (
+    //         <div
+    //           key={zip.code}
+    //           className="item"
+    //           onClick={() => handleZip(zip.code)}
+    //         >
+    //           {zip.code}
+    //         </div>
+    //       ))}
+    //     </div>
+    //   )}
+
+    //   <span className="error-text">{errors_page2.zip}</span>
+    // </div>
   );
 };
 

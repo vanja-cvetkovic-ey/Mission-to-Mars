@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
 
-import './ModalMsg.scss';
+// import './ModalMsg.scss';
 import Loader from '../../../assets/Loader';
 import { SUBMITED_RESPONSE } from '../../../shared/constants';
+import { Button } from 'react-bootstrap';
 
-const ModalMsg = ({ success, loading }) => {
+const ModalMsg = ({ success, loading, show }) => {
   let navigate = useNavigate();
 
   const hanldeClick = () => {
@@ -12,32 +14,40 @@ const ModalMsg = ({ success, loading }) => {
   };
 
   return (
-    <div className="modal display-center">
+    <>
       {loading ? (
-        <div>
+        <Modal show={show}>
           <Loader />
-        </div>
+        </Modal>
       ) : (
-        <div className="modal-container display-center">
+        <Modal show={show} onHide={hanldeClick}>
           {success ? (
-            <div className="content">
-              <h2>{SUBMITED_RESPONSE.resolved_header}</h2>
-              <div className="p-text">{SUBMITED_RESPONSE.resolved_text}</div>
-            </div>
+            <>
+              <Modal.Header className="p-5" closeButton>
+                <Modal.Title>{SUBMITED_RESPONSE.resolved_header}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="px-5">
+                <div className="p-text">{SUBMITED_RESPONSE.resolved_text}</div>
+              </Modal.Body>
+            </>
           ) : (
-            <div className="content">
-              <h2>{SUBMITED_RESPONSE.reject_header}</h2>
-              <div className="p-text">{SUBMITED_RESPONSE.reject_text}</div>
-            </div>
+            <>
+              <Modal.Header className="px-5 py-4" closeButton>
+                <Modal.Title>{SUBMITED_RESPONSE.reject_header}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="px-5">
+                <div className="p-text">{SUBMITED_RESPONSE.reject_text}</div>
+              </Modal.Body>
+            </>
           )}
-          <div className="modal-footer">
-            <button className="btn-cta" onClick={hanldeClick}>
+          <Modal.Footer className="px-5">
+            <Button className="btn-cta" onClick={hanldeClick}>
               Ok
-            </button>
-          </div>
-        </div>
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
-    </div>
+    </>
   );
 };
 
