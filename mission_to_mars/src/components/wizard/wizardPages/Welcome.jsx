@@ -44,7 +44,7 @@ const Welcome = () => {
         {WIZARD_WELCOME.headign}
       </Card.Header>
       <Card.Body className="px-5 py-2">
-        <p className="p-text">
+        <p className="text-start p-text">
           {WIZARD_WELCOME.text[0]}
           <Link to="/privacynotices">{PRIVACY_NOTICE.header}</Link> and{' '}
           <Link to="/termaandconditions">{TERMS_AND_CONDITIONS.header}</Link>{' '}
@@ -53,8 +53,8 @@ const Welcome = () => {
       </Card.Body>
       <Card.Footer className="px-5 py-3">
         <Row>
-          <Col xs={12} lg={9} className="py-1">
-            <Form.Group className="mb-1">
+          <Col xs={12} lg={9} className="text-start py-1">
+            <Form.Group className="text-start mb-1">
               <Form.Check
                 type="checkbox"
                 label={[WIZARD_WELCOME.checkbox[0]]}
@@ -63,7 +63,7 @@ const Welcome = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-1">
+            <Form.Group className="text-start mb-1">
               <Form.Check
                 type="checkbox"
                 label={[WIZARD_WELCOME.checkbox[1]]}

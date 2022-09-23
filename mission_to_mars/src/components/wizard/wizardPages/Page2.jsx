@@ -54,7 +54,7 @@ const Page2 = () => {
 
   return (
     <>
-      <Card.Header className="px-5 py-4">
+      <Card.Header className="px-5 py-4 bg-transparent">
         <Stack direction="horizontal" gap={2}>
           <h3>{WIZARD_PAGE_2.heading}</h3>
 
@@ -199,7 +199,7 @@ const Page2 = () => {
       </Card.Body>
 
       <Card.Footer className="px-5 py-3">
-        <Stack direction="horizontal" gap={2}>
+        <Stack direction="horizontal">
           <Button variant="outline-secondary">Back</Button>
           {continueBtn}
         </Stack>

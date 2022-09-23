@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <Header />
       <div className="main">
-        <Container>
+        <Container fluid>
           <Routes>
             <Route path="/" element={<Home />} />
 

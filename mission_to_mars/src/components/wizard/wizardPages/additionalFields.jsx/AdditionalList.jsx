@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
+import { Row, Col, Form, Stack, Button } from 'react-bootstrap';
 
 import './AdditionalList.scss';
 import WizardContext from '../../../../context/WizardContext';
@@ -56,61 +57,109 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
   }, [disabled, listOfOffenses, formState.errors_page3]);
 
   return (
-    <>
+    <Row>
       {listOfOffenses.map((row, index) => (
-        <div className="row flex-row additional" key={index}>
+        <Row key={index} className="my-1">
           {/* adress line 1 */}
-          <div className="row-item row-item-3">
-            <div className="info additional_info">
-              <span>*</span> {WIZARD_PAGE_3.convicted_reason}
-            </div>
-            <input
-              className={
-                'error-' + !!formState.errors_page3[`convicted_reason-${index}`]
-              }
-              name="forWhat"
-              value={row.forWhat}
-              onChange={(e) => handleOffenseChange(e, index)}
-              onBlur={(e) =>
-                handleValueValidation(
-                  `convicted_reason-${index}`,
-                  e.target.value,
-                  'errors_page3'
-                )
-              }
-            />
-            <span className="error-text">
-              {formState.errors_page3[`convicted_reason-${index}`]}
-            </span>
-          </div>
+          <Col xs={12} lg={5}>
+            <Form.Group className="text-start">
+              <Form.Label>
+                <span className="text-danger">*</span>{' '}
+                {WIZARD_PAGE_3.convicted_reason}
+              </Form.Label>
+              <Form.Control
+                className={
+                  !!formState.errors_page3[`convicted_reason-${index}`] &&
+                  'border-danger'
+                }
+                name="forWhat"
+                value={row.forWhat}
+                onChange={(e) => handleOffenseChange(e, index)}
+                onBlur={(e) =>
+                  handleValueValidation(
+                    `convicted_reason-${index}`,
+                    e.target.value,
+                    'errors_page3'
+                  )
+                }
+              />
+              <Form.Text className="text-danger">
+                {formState.errors_page3[`convicted_reason-${index}`]}
+              </Form.Text>
+            </Form.Group>
+          </Col>
+          {/*  */}
+          <Col xs={12} lg={5}>
+            <Form.Group className="text-start">
+              <Form.Label>
+                <span className="text-danger">*</span>
+                {WIZARD_PAGE_3.convicted_date}
+              </Form.Label>
+              <Form.Control
+                className={
+                  !!formState.errors_page3[`convicted_date-${index}`] &&
+                  'border-danger'
+                }
+                type="date"
+                name="convictionDate"
+                max={MAX_DATE}
+                value={row.convictionDate}
+                onChange={(e) => handleOffenseChange(e, index)}
+                onBlur={(e) =>
+                  handleValueValidation(
+                    `convicted_date-${index}`,
+                    e.target.value,
+                    'errors_page3'
+                  )
+                }
+              />
+              <Form.Text className="text-danger">
+                {formState.errors_page3[`convicted_date-${index}`]}
+              </Form.Text>
+            </Form.Group>
+          </Col>
+          <Col sm={12} md={2} className="my-auto">
+            <Form.Label></Form.Label>
+            <Row>
+              <Stack
+                direction="horizontal"
+                className="align-items-start"
+                gap={3}
+              >
+                {listOfOffenses.length !== 1 ? (
+                  <Button
+                    className="border"
+                    variant="light"
+                    onClick={() => handleOffenseRemove(index)}
+                    disabled={!listOfOffenses.length}
+                  >
+                    -
+                  </Button>
+                ) : (
+                  <Button variant="light" disabled>
+                    -
+                  </Button>
+                )}
+                {listOfOffenses.length - 1 === index ? (
+                  <Button
+                    className="border"
+                    variant="light"
+                    onClick={handleOffenseAdd}
+                  >
+                    +
+                  </Button>
+                ) : (
+                  <Button className="mx-auto " variant="light" disabled>
+                    +
+                  </Button>
+                )}
+              </Stack>
+            </Row>
+          </Col>
 
           {/* adress line 2 */}
-          <div className="row-item row-item-3">
-            <div className="info additional_info">
-              <span>*</span> {WIZARD_PAGE_3.convicted_date}
-            </div>
-            <input
-              className={
-                'error-' + !!formState.errors_page3[`convicted_date-${index}`]
-              }
-              type="date"
-              name="convictionDate"
-              max={MAX_DATE}
-              value={row.convictionDate}
-              onChange={(e) => handleOffenseChange(e, index)}
-              onBlur={(e) =>
-                handleValueValidation(
-                  `convicted_date-${index}`,
-                  e.target.value,
-                  'errors_page3'
-                )
-              }
-            />
-            <span className="error-text">
-              {formState.errors_page3[`convicted_date-${index}`]}
-            </span>
-          </div>
-          <div className="row-item row-item-3 btns-group flex-row">
+
+          {/* <div className="row-item row-item-3 btns-group flex-row">
             {listOfOffenses.length !== 1 ? (
               <div
                 className="btn-form display-center"
@@ -131,10 +180,10 @@ const AdditionalList = ({ disabled, setDisableSubmitBtn }) => {
             ) : (
               <div className="btn-form false"></div>
             )}
-          </div>
-        </div>
+          </div> */}
+        </Row>
       ))}
-    </>
+    </Row>
   );
 };
 

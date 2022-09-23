@@ -10,8 +10,7 @@ const Wizard = () => {
 
   return (
     <Card className=" border">
-      {/* {startWizard ? displayStep(currentPage) : <Welcome />} */}
-      {displayStep(3)}
+      {startWizard ? displayStep(currentPage) : <Welcome />}
     </Card>
   );
 };

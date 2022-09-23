@@ -44,7 +44,7 @@ const Page1 = () => {
 
   return (
     <>
-      <Card.Header className="px-5 py-4">
+      <Card.Header className="px-5 py-4 bg-transparent">
         <Stack direction="horizontal" gap={2}>
           <h3>{WIZARD_PAGE_1.heading}</h3>
 
@@ -56,7 +56,7 @@ const Page1 = () => {
       <Card.Body className="p-5">
         <Row>
           <Col md={6}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
               <Form.Label className="text-start">
                 <span>*</span> {WIZARD_PAGE_1.title_label}
               </Form.Label>
@@ -130,55 +130,11 @@ const Page1 = () => {
             </Form.Group>
           </Col>
         </Row>
-        {/* <div className="group">
-          <div className="row flex-row">
-            <div className="row-item">
-              <input
-                className={`error-${!!errors_page1.firstName}`}
-                type="text"
-                name="firstName"
-                placeholder={WIZARD_PAGE_1.firstName_placeholder}
-                value={page1.firstName}
-                onChange={(e) =>
-                  handleInput(e.target.name, e.target.value, PAGE)
-                }
-                onBlur={(e) =>
-                  handleValueValidation(
-                    e.target.name,
-                    e.target.value,
-                    ERRORS_PAGE
-                  )
-                }
-              />
-              <span className="error-text">{errors_page1.firstName}</span>
-            </div>
-            <div className="row-item">
-              <input
-                className={`error-${!!errors_page1.lastName}`}
-                type="text"
-                name="lastName"
-                placeholder={WIZARD_PAGE_1.lastName_placeholder}
-                value={page1.lastName}
-                onChange={(e) =>
-                  handleInput(e.target.name, e.target.value, PAGE)
-                }
-                onBlur={(e) =>
-                  handleValueValidation(
-                    e.target.name,
-                    e.target.value,
-                    ERRORS_PAGE
-                  )
-                }
-              />
-              <span className="error-text">{errors_page1.lastName}</span>
-            </div>
-          </div>
-        </div> */}
 
         <Row>
           <Col md={6}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>
+            <Form.Group className="text-start mb-3" controlId="formBasicEmail">
+              <Form.Label className="text-start">
                 <span>*</span> {WIZARD_PAGE_1.birthdate_label}
               </Form.Label>
               <Form.Control

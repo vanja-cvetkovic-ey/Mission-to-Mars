@@ -7,19 +7,16 @@ import { HOME } from '../../shared/constants';
 import './Home.scss';
 const Home = () => {
   return (
-    <div className="home">
-      <Container>
-        <Row>
-          <Carousel />
-        </Row>
-        <Row>
-          <div className="p-text">{HOME.cta_text}</div>
-          <Link to="/applicationprocess" className="btn-cta">
-            {HOME.cta_btn_text}
-          </Link>
-        </Row>
-      </Container>
-    </div>
+    <>
+      <Row style={{ height: '42vh' }}>
+        <Carousel className="mb-5" />
+      </Row>
+
+      <div className="p-text">{HOME.cta_text}</div>
+      <Link to="/applicationprocess" className="btn btn-dark ">
+        {HOME.cta_btn_text}
+      </Link>
+    </>
   );
 };
 

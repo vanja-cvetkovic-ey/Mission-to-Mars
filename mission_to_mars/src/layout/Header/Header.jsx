@@ -6,20 +6,13 @@ import './Header.scss';
 
 const Header = () => {
   return (
-    <Navbar bg="dark">
+    <Navbar className="py-3" bg="dark">
       <Container>
         <Link to="/">
           <Logo />
         </Link>
       </Container>
     </Navbar>
-    // <div className="Header">
-    //   <div className="navbar flex-row">
-    //     <Link to="/">
-    //       <Logo />
-    //     </Link>
-    //   </div>
-    // </div>
   );
 };
 
