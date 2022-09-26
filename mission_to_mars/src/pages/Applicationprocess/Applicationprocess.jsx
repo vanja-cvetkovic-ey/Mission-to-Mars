@@ -8,7 +8,7 @@ import Wizard from '../../components/wizard/Wizard';
 
 const Applicationprocess = () => {
   return (
-    <div className="">
+    <Container className="pt-5 g-0  flex-grow-1">
       <h2 className="text-start">{APPLICATIONPROCESS.heading}</h2>
 
       <Row>
@@ -24,7 +24,7 @@ const Applicationprocess = () => {
           </Col>
         </WizardProvider>
       </Row>
-    </div>
+    </Container>
   );
 };
 

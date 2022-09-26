@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 
-// import './Carousel.scss';
+import './Carousel.scss';
 
 /**
  * single item card in carousel
@@ -14,19 +14,18 @@ import { Card } from 'react-bootstrap';
 
 const CardCarousel = ({ url, name, explanation, id }) => {
   return (
-    <Card style={{ flex: 1, height: '37vh' }} className="mx-sm-5 mx-md-1">
+    // xxs={12} xs={6} sm={4} md={3}>
+    <Card style={{ height: '42vh' }} className="">
       <Card.Img
         className="card-img-top "
-        style={{ minHeight: '180px', objectFit: 'cover' }}
+        style={{ height: '220px', objectFit: 'cover' }}
         src={url}
         alt={name}
       />
 
       <Card.Body className="overflow-hidden">
-        <Card.Title>{name}</Card.Title>
-        <Card.Text className="overflow-hidden" style={{ height: '70%' }}>
-          {explanation}
-        </Card.Text>
+        <Card.Title className="mt-1">{name}</Card.Title>
+        <Card.Text className="card-p">{explanation}</Card.Text>
       </Card.Body>
     </Card>
   );

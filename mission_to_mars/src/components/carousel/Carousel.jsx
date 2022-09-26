@@ -6,7 +6,7 @@ import CardCarousel from './CardCarousel';
 
 import Loader from '../../assets/Loader';
 import useWindowSize from '../../hooks/useWindowSize';
-import { Col, Container, Row, Button, Stack } from 'react-bootstrap';
+import { Col, Row, Button, Container } from 'react-bootstrap';
 
 const IMAGES_APIKEY = process.env.REACT_APP_IMAGES_APIKEY;
 const IMAGES_COUNT = 32;
@@ -111,72 +111,90 @@ const Carousel = () => {
   };
 
   return (
-    <>
-      {loading && <Loader />}
-      {err && (
-        <h4 className="error msg">
-          Our images are still somewhere in the Univers <br /> enjoy the rest of
-          content
-        </h4>
-      )}
-      {activeImgs && (
-        <Row className="g-0">
-          <Col xs={1} className="my-auto">
-            {first !== 0 ? (
-              <Button className="arrow" onClick={handlePrev}>
-                <AiOutlineArrowLeft />
-              </Button>
-            ) : (
-              <Button className="arrow disabled">
-                <AiOutlineArrowLeft />
-              </Button>
-            )}
-          </Col>
-          <Col xs={10} className="g-0">
-            <Row style={{ maxHeight: '100%' }}>
-              {activeImgs.map(({ url, title, explanation }) => (
-                <Col sm={12} md={6} lg={4} xl={3}>
-                  <CardCarousel
-                    key={title}
-                    url={url}
-                    name={title}
-                    explanation={explanation}
-                  />
-                </Col>
-              ))}
-            </Row>
-          </Col>
-          <Col xs={1} className="my-auto">
-            {last !== IMAGES_COUNT ? (
-              <Button className="arrow" onClick={handleNext}>
-                <AiOutlineArrowRight />
-              </Button>
-            ) : (
-              <Button className="arrow disabled">
-                <AiOutlineArrowRight />
-              </Button>
-            )}
-          </Col>
-          <div className="dots">
-            {amount_activeImgs >= 3 && (
-              <>
-                {dots.map((dot) =>
-                  dot === counter ? (
-                    <div key={dot} className="dot active" />
-                  ) : (
-                    <div
-                      key={dot}
-                      className="dot"
-                      onClick={() => dotsHandler(dot)}
-                    />
-                  )
+    <Row className="g-0 mt-5 py-5">
+      <Container
+        className="d-flex justify-content-center flex-column align-items-center"
+        style={{ minHeight: '42vh' }}
+      >
+        {loading && <Loader />}
+        {err && (
+          <h4 className="error msg">
+            Our images are still somewhere in the Univers <br /> enjoy the rest
+            of content
+          </h4>
+        )}
+        {activeImgs && (
+          <>
+            <Row className="g-0">
+              <Col
+                xs={1}
+                className="my-auto col-1 d-flex justify-content-center"
+              >
+                {first !== 0 ? (
+                  <Button variant="dark" onClick={handlePrev}>
+                    <AiOutlineArrowLeft />
+                  </Button>
+                ) : (
+                  <Button variant="dark" className="arrow disabled">
+                    <AiOutlineArrowLeft />
+                  </Button>
                 )}
-              </>
-            )}
-          </div>
-        </Row>
-      )}
-    </>
+              </Col>
+              <Col xs={10} className="g-0 px-1 px-xs-0">
+                <Row style={{ maxHeight: '100%' }}>
+                  {activeImgs.map(({ url, title, explanation }) => (
+                    <Col sm={12} md={6} lg={4} xl={3}>
+                      <CardCarousel
+                        key={title}
+                        url={url}
+                        name={title}
+                        explanation={explanation}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              </Col>
+              <Col
+                xs={1}
+                className="my-auto col-1 d-flex justify-content-center"
+              >
+                {last !== IMAGES_COUNT ? (
+                  <Button variant="dark" onClick={handleNext}>
+                    <AiOutlineArrowRight />
+                  </Button>
+                ) : (
+                  <Button variant="dark" className="arrow disabled">
+                    <AiOutlineArrowRight />
+                  </Button>
+                )}
+              </Col>
+            </Row>
+            <Row className="d-inline-flex justify-content-center w-100 mt-3">
+              {amount_activeImgs >= 3 && (
+                <>
+                  {dots.map((dot) =>
+                    dot === counter ? (
+                      <div
+                        key={dot}
+                        className="m-2 rounded-circle border bg-secondary dot g-0"
+                        style={{ width: '18px', height: '18px' }}
+                      />
+                    ) : (
+                      <div
+                        key={dot}
+                        onClick={() => dotsHandler(dot)}
+                        className="m-2 rounded-circle border bg-light dot g-0"
+                        style={{ width: '18px', height: '18px' }}
+                      />
+                    )
+                  )}
+                </>
+              )}
+            </Row>
+          </>
+        )}
+      </Container>
+    </Row>
   );
 };
 

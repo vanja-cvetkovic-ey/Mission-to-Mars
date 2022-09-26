@@ -4,7 +4,7 @@ import './Loader.scss';
 
 const Loader = () => {
   return (
-    <div className="Loader display-center">
+    <div className="Loader d-flex justify-content-center">
       <svg
         width="82"
         height="49"

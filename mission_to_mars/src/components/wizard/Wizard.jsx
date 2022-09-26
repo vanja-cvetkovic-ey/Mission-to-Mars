@@ -9,7 +9,7 @@ const Wizard = () => {
   const { startWizard, currentPage, displayStep } = useContext(WizardContext);
 
   return (
-    <Card className=" border">
+    <Card className=" border mt-3 shadow-sm">
       {startWizard ? displayStep(currentPage) : <Welcome />}
     </Card>
   );
